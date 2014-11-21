@@ -41,13 +41,13 @@ public class WalksProvider extends ContentProvider {
         matcher.addURI(authority, WalksContract.PATH_AREA + "/routes", ROUTES_FOR_AREA);
 
         // wildlife
-        matcher.addURI(authority, WalksContract.WILDLIFE, WILDLIFE);
-        matcher.addURI(authority, WalksContract.WILDLIFE + "/#", WILDLIFE_ID);
-        matcher.addURI(authority, WalksContract.WILDLIFE + "/routes", ROUTES_FOR_WILDLIFE);
+        matcher.addURI(authority, WalksContract.PATH_WILDLIFE, WILDLIFE);
+        matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/#", WILDLIFE_ID);
+        matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/routes", ROUTES_FOR_WILDLIFE);
 
         // log
-        matcher.addURI(authority, WalksContract.LOG_ENTRY, LOG_ENTRY);
-        matcher.addURI(authority, WalksContract.LOG_ENTRY + "/#", LOG_ENTRY_ID);
+        matcher.addURI(authority, WalksContract.PATH_LOG_ENTRY, LOG_ENTRY);
+        matcher.addURI(authority, WalksContract.PATH_LOG_ENTRY + "/#", LOG_ENTRY_ID);
 
         return matcher;
     }
