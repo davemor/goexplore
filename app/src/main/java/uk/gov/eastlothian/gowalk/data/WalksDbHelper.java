@@ -17,7 +17,7 @@ import uk.gov.eastlothian.gowalk.data.WalksContract.LogEntry;
  */
 public class WalksDbHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "walks.db";
+    public static final String DB_NAME = "walks.db";
     private static final int DB_VERSION = 1;
 
     public WalksDbHelper(Context context) {

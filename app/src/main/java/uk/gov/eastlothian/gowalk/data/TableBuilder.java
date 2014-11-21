@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class TableBuilder {
     private String name;
-    private Column primaryKey;
+    private String primaryKey;
     private List<Column> columns = new ArrayList<Column>();
     private List<ForeignKey> foreignKeys = new ArrayList<ForeignKey>();
 
@@ -34,7 +34,7 @@ public class TableBuilder {
             this.refKey = refKey;
         }
         public String asQuery() {
-            return "FOREIGN KEY (" + key + ") REFERENCE " + refTable + " (" + refKey + ")";
+            return "FOREIGN KEY (" + key + ") REFERENCES " + refTable + "(" + refKey + ")";
         }
     }
 
@@ -44,7 +44,7 @@ public class TableBuilder {
     }
 
     private void addPrimaryKey(String name) {
-        primaryKey = new Column(name, "INTEGER PRIMARY KEY AUTOINCREMENT");
+        primaryKey = name;
     }
     public TableBuilder addIntegerColumn(String name) {
         columns.add(new Column(name, "INTEGER"));
@@ -62,7 +62,7 @@ public class TableBuilder {
     public String buildQuery() {
         String rtn = "CREATE TABLE " + name + "(";
         rtn += primaryKey + " INTEGER PRIMARY KEY";
-        String separator = ",";
+        String separator = ", ";
         for(Column col : columns) {
             rtn += separator + col.asQuery();
         }
