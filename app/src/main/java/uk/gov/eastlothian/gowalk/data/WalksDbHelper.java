@@ -3,7 +3,6 @@ package uk.gov.eastlothian.gowalk.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import uk.gov.eastlothian.gowalk.data.WalksContract.RouteEntry;
 import uk.gov.eastlothian.gowalk.data.WalksContract.AreaEntry;
