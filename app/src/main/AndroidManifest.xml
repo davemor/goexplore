@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="uk.gov.eastlothian.gowalk"
+            android:name=".data.WalksProvider"/>
     </application>
 
 </manifest>

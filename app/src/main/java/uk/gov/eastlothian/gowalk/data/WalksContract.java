@@ -53,6 +53,15 @@ public class WalksContract {
         public static Uri buildRouteUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+        public static Uri buildAreasForRouteUri(long id) {
+            return buildRouteUri(id).buildUpon().appendPath("area").build();
+        }
+        public static Uri buildWildlifeOnRouteUri(long id) {
+            return buildRouteUri(id).buildUpon().appendPath("wildlife").build();
+        }
+        public static String getRouteFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
     }
     public static final class AreaEntry implements BaseColumns {
         // content provider uris
@@ -71,6 +80,12 @@ public class WalksContract {
         public static Uri buildAreaUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+        public static Uri buildRoutesInAreaUri(long id) {
+            return buildAreaUri(id).buildUpon().appendPath("route").build();
+        }
+        public static String getAreaFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
     }
     public static final class RouteInAreaEntry implements BaseColumns {
         // content provider uris
@@ -85,11 +100,6 @@ public class WalksContract {
         public static final String TABLE_NAME = "route_in_area";
         public static final String COLUMN_ROUTE_KEY = "route_id";
         public static final String COLUMN_AREA_KEY = "area_id";
-
-        // query uris builder helpers
-        public static Uri buildRouteInArea(long id) {
-            return ContentUris.withAppendedId(CONTENT_URI, id);
-        }
     }
     /**
      * Wildlife Data
@@ -115,6 +125,12 @@ public class WalksContract {
         public static Uri buildWildLifeUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+        public static Uri buildRoutesFromWildlifeUri(long id) {
+            return buildWildLifeUri(id).buildUpon().appendPath("route").build();
+        }
+        public static String getWildlifeFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
     }
     public static final class WildlifeOnRouteEntry implements BaseColumns {
         // content provider uris
@@ -130,10 +146,6 @@ public class WalksContract {
         public static final String COLUMN_ROUTE_KEY = "route_id";
         public static final String COLUMN_WILDLIFE_KEY = "wildlife_id";
 
-        // query uris builder helpers
-        public static Uri buildWildlifeOnRouteUri(long id) {
-            return ContentUris.withAppendedId(CONTENT_URI, id);
-        }
     }
     /**
      * User Generated Content

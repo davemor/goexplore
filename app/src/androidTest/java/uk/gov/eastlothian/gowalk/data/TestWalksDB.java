@@ -64,7 +64,7 @@ public class TestWalksDb extends AndroidTestCase {
     }
 
     // validate a cursor against expected content values
-    static void validateCursor(Cursor valueCursor, ContentValues expectedValues) {
+    public static void validateCursor(Cursor valueCursor, ContentValues expectedValues) {
         assertTrue(valueCursor.moveToFirst());
         Set<Map.Entry<String, Object>> valueSet = expectedValues.valueSet();
         for (Map.Entry<String, Object> entry : valueSet) {
@@ -78,7 +78,7 @@ public class TestWalksDb extends AndroidTestCase {
     }
 
     // generate test data as content values
-    private static ContentValues createSimpleRouteValues() {
+    public static ContentValues createSimpleRouteValues() {
         ContentValues values = new ContentValues();
         values.put(RouteEntry.COLUMN_ROUTE_NUMBER, 42);
         values.put(RouteEntry.COLUMN_COORDINATES, "[[-2.958,55.950],[-2.958,55.949]]");
@@ -87,18 +87,18 @@ public class TestWalksDb extends AndroidTestCase {
         values.put(RouteEntry.COLUMN_SURFACE, "Tarmac/Gravel");
         return values;
     }
-    private static ContentValues createSimpleAreaValues() {
+    public static ContentValues createSimpleAreaValues() {
         ContentValues values = new ContentValues();
         values.put(AreaEntry.COLUMN_AREA_NAME, "Gifford and surrounding area");
         return values;
     }
-    private static ContentValues createSimpleRoutesInAreasValues(long routeId, long areaId) {
+    public static ContentValues createSimpleRoutesInAreasValues(long routeId, long areaId) {
         ContentValues values = new ContentValues();
         values.put(RouteInAreaEntry.COLUMN_ROUTE_KEY, routeId);
         values.put(RouteInAreaEntry.COLUMN_AREA_KEY, areaId);
         return values;
     }
-    private static ContentValues createSimpleWildlifeValues() {
+    public static ContentValues createSimpleWildlifeValues() {
         ContentValues values = new ContentValues();
         values.put(WildlifeEntry.COLUMN_WILDLIFE_NAME, "kingfisher");
         values.put(WildlifeEntry.COLUMN_CATEGORY, "birds");
@@ -107,13 +107,13 @@ public class TestWalksDb extends AndroidTestCase {
         values.put(WildlifeEntry.COLUMN_WHEN_SEEN, "all year possible");
         return values;
     }
-    private static ContentValues createSimpleWildlifeOnRoute(long routeId, long wildlifeId) {
+    public static ContentValues createSimpleWildlifeOnRoute(long routeId, long wildlifeId) {
         ContentValues values = new ContentValues();
         values.put(WildlifeOnRouteEntry.COLUMN_ROUTE_KEY, routeId);
         values.put(WildlifeOnRouteEntry.COLUMN_WILDLIFE_KEY, wildlifeId);
         return values;
     }
-    private static ContentValues createSimpleLogEntryValues(long wildlifeId) {
+    public static ContentValues createSimpleLogEntryValues(long wildlifeId) {
         ContentValues values = new ContentValues();
         values.put(LogEntry.COLUMN_WILDLIFE_KEY, wildlifeId);
         values.put(LogEntry.COLUMN_LAT, "56.0087819");
