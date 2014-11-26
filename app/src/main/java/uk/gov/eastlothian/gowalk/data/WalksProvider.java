@@ -380,5 +380,9 @@ public class WalksProvider extends ContentProvider {
         return rowsUpdated;
     }
 
-    // TODO: override bulktransactions for when we are parsing json
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        // TODO: override bulktransactions for when we are parsing json
+        return super.bulkInsert(uri, values);
+    }
 }
