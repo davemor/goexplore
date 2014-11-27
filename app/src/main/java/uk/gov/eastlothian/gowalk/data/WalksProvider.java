@@ -35,18 +35,6 @@ public class WalksProvider extends ContentProvider {
     private WalksDbHelper mOpenHelper;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    /*
-    private static final SQLiteQueryBuilder sAreasForRouteQueryBuilder;
-
-    static {
-        sAreasForRouteQueryBuilder = new SQLiteQueryBuilder();
-        sAreasForRouteQueryBuilder.setTables(
-                WalksContract.RouteEntry.TABLE_NAME + " INNER JOIN"
-
-        );
-    }
-    */
-
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = WalksContract.CONTENT_AUTHORITY;
@@ -56,7 +44,6 @@ public class WalksProvider extends ContentProvider {
         matcher.addURI(authority, WalksContract.PATH_ROUTE + "/#", ROUTE_ID);
         matcher.addURI(authority, WalksContract.PATH_ROUTE + "/#/area", AREAS_FOR_ROUTE);
         matcher.addURI(authority, WalksContract.PATH_ROUTE + "/#/wildlife", WILDLIFE_FOR_ROUTE);
-
 
         // areas
         matcher.addURI(authority, WalksContract.PATH_AREA, AREA);
@@ -145,6 +132,33 @@ public class WalksProvider extends ContentProvider {
                     "ON wildlife._ID " +
                     "= wildlife_on_route._ID " +
                     "WHERE wildlife_on_route.route_id = ?;";
+
+                /*
+                String query = "SELECT " + WalksContract.WildlifeEntry.TABLE_NAME +
+                                     "." + WalksContract.WildlifeEntry._ID + ", "
+                                         + WalksContract.WildlifeEntry.TABLE_NAME +
+                                     "." + WalksContract.WildlifeEntry.COLUMN_WILDLIFE_NAME + ", "
+                                         + WalksContract.WildlifeEntry.TABLE_NAME +
+                                     "." + WalksContract.WildlifeEntry.COLUMN_CATEGORY + ", "
+                                         + WalksContract.WildlifeEntry.TABLE_NAME +
+                                     "." + WalksContract.WildlifeEntry.COLUMN_DESCRIPTION + ", "
+                                         + WalksContract.WildlifeEntry.TABLE_NAME +
+                                     "." + WalksContract.WildlifeEntry.COLUMN_IMAGE_NAME + ", "
+                                         + WalksContract.WildlifeEntry.TABLE_NAME +
+                                     "." + WalksContract.WildlifeEntry.COLUMN_WHEN_SEEN +
+                                " FROM " + WalksContract.WildlifeEntry.TABLE_NAME +
+                          " INNER JOIN " + WalksContract.WildlifeOnRouteEntry.TABLE_NAME +
+                                  " ON " + WalksContract.WildlifeEntry._ID +
+                                   " = " + WalksContract.WildlifeOnRouteEntry._ID +
+                               " WHERE " + WalksContract.WildlifeOnRouteEntry.TABLE_NAME +
+                                     "." + Wal
+
+
+                        "INNER JOIN wildlife_on_route " +
+                        "ON wildlife._ID " +
+                        "= wildlife_on_route._ID " +
+                        "WHERE wildlife_on_route.route_id = ?;";
+                        */
                 rtnCursor = mOpenHelper.getReadableDatabase().rawQuery(query, subs);
             }
                 break;

@@ -2,6 +2,7 @@ package uk.gov.eastlothian.gowalk.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
@@ -29,12 +30,14 @@ public class WalksFileLoader {
     public static final String LOG_TAG = WalksFileLoader.class.getSimpleName();
 
     static void loadWalksDatabaseFromFiles(Context context) throws IOException{
-        Map<Integer, String> descriptions = loadRouteDescriptionsFromCSV(context.getAssets().open("Routes.csv"));
-        insertRoutesIntoWalksDatabase(context.getAssets().open("core_paths.json"), descriptions, context);
-        WalksFileLoader.loadWildlifeDbFromCSV(context.getAssets().open("Wildlife.csv"), context);
+        AssetManager asserts = context.getAssets();
+        Map<Integer, String> descriptions = loadRouteDescriptionsFromCSV(asserts.open("Routes.csv"));
+        insertRoutesIntoWalksDatabase(asserts.open("core_paths.json"), descriptions, context);
+        WalksFileLoader.loadWildlifeDbFromCSV(asserts.open("Wildlife.csv"), context);
+        loadRoutesInAreas(asserts.open("RoutesInAreas.csv"), context);
     }
 
-    static void insertRoutesIntoWalksDatabase(InputStream jsonIS, Map<Integer, String> descriptions, Context context) throws IOException
+    private static void insertRoutesIntoWalksDatabase(InputStream jsonIS, Map<Integer, String> descriptions, Context context) throws IOException
     {
         // read in the json string from the file
         BufferedReader reader = new BufferedReader(new InputStreamReader(jsonIS));
@@ -67,7 +70,6 @@ public class WalksFileLoader {
                 if(surface.equalsIgnoreCase("null")) {
                     surface = "unknown";
                 }
-
                 String description = descriptions.get(routeNumber);
                 if(description == null || description.equalsIgnoreCase("null")) {
                     description = "no description available";
@@ -95,7 +97,7 @@ public class WalksFileLoader {
         context.getContentResolver().bulkInsert(WalksContract.RouteEntry.CONTENT_URI, contentValues);
     }
 
-    static Map<Integer, String> loadRouteDescriptionsFromCSV(InputStream inStream) {
+    private static Map<Integer, String> loadRouteDescriptionsFromCSV(InputStream inStream) {
         Map<Integer, String> rtnMap = new HashMap<Integer, String>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
         try {
@@ -120,8 +122,7 @@ public class WalksFileLoader {
         return rtnMap;
     }
 
-    static void loadWildlifeDbFromCSV(InputStream inStream, Context context) {
-        // List<ContentValues> valuesList = new ArrayList<ContentValues>();
+    private static void loadWildlifeDbFromCSV(InputStream inStream, Context context) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
         try {
             reader.readLine();
@@ -131,7 +132,6 @@ public class WalksFileLoader {
                 String[] rowData = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
                 if(rowData.length >= 5) {
-
                     // get the values out of the row
                     String name = rowData[1];
                     String category = rowData[2];
@@ -195,8 +195,9 @@ public class WalksFileLoader {
                     // insert the values into the database
                     context.getContentResolver().bulkInsert(WalksContract.WildlifeOnRouteEntry.CONTENT_URI,
                             wildlifeOnRouteValues.toArray(new ContentValues[wildlifeOnRouteValues.size()]));
+                } else {
+                    Log.d(LOG_TAG, "Skipping line that does not have enough data.");
                 }
-
             }
         } catch (IOException ex) {
             Log.d(LOG_TAG, "Error while loading the wildlife.", ex);
@@ -208,5 +209,76 @@ public class WalksFileLoader {
                 Log.d(LOG_TAG, "Error while closing the wildlife csv input stream.", e);
             }
         }
+    }
+
+    private static void loadRoutesInAreas(InputStream inputStream, Context context) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        try {
+            reader.readLine();
+
+            // build up a hash table of the area names to the routes that cross them
+            Map<String, List<Long>> areas = new HashMap<String, List<Long>>();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] rowData = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+
+                // resolve the route id from it's number
+                int routeNumber = Integer.parseInt(rowData[0]);
+                long routeId = getRouteIdFromRouteNumber(routeNumber, context);
+
+                // find the area and add the route id to it's routes
+                String areaName = rowData[1];
+                if (areas.containsKey(areaName)) {
+                    areas.get(areaName).add(routeId);
+                } else {
+                    List<Long> routes = new ArrayList<Long>();
+                    routes.add(routeId);
+                    areas.put(areaName, routes);
+                }
+            }
+
+            // insert the areas and routes on areas into the content provider
+            for (Map.Entry<String, List<Long>> area : areas.entrySet()) {
+                // create a new area
+                ContentValues areaValues = new ContentValues();
+                areaValues.put(WalksContract.AreaEntry.COLUMN_AREA_NAME, area.getKey());
+                Uri areaUri = context.getContentResolver().insert(WalksContract.AreaEntry.CONTENT_URI, areaValues);
+                long areaId = Long.parseLong(WalksContract.AreaEntry.getAreaFromUri(areaUri));
+
+                // for each route, create an entry in the ROUTE_IN_AREA table
+                ContentValues[] areaInRouteValues = new ContentValues[area.getValue().size()];
+                int idx = 0;
+                for (long routeId : area.getValue()) {
+                    areaInRouteValues[idx] = new ContentValues();
+                    areaInRouteValues[idx].put(WalksContract.RouteInAreaEntry.COLUMN_ROUTE_KEY, routeId);
+                    areaInRouteValues[idx].put(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY, areaId);
+                    ++idx;
+                }
+                context.getContentResolver().bulkInsert(WalksContract.RouteInAreaEntry.CONTENT_URI, areaInRouteValues);
+            }
+        } catch (IOException e) {
+            Log.d(LOG_TAG, "Error while reading routes in areas table." + e.toString());
+        } finally {
+            try {
+                reader.close();
+            }
+            catch (IOException ex) {
+                Log.d(LOG_TAG, "Error while closing routes in area reader.");
+            }
+        }
+    }
+
+    private static long getRouteIdFromRouteNumber(int routeNumber, Context context) {
+        Cursor cursor = context.getContentResolver().query(
+                WalksContract.RouteEntry.CONTENT_URI,
+                new String[]{WalksContract.RouteEntry._ID},
+                WalksContract.RouteEntry.COLUMN_ROUTE_NUMBER + " LIKE ?",
+                new String[]{routeNumber + "%"},
+                null);
+        long routeId = -1;
+        if (cursor.moveToFirst()) {
+            routeId = cursor.getColumnIndex(WalksContract.RouteEntry._ID);
+        }
+        return routeId;
     }
 }

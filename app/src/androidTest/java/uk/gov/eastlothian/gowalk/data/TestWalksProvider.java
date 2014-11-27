@@ -22,11 +22,15 @@ public class TestWalksProvider extends AndroidTestCase {
     public static final String LOG_TAG = TestWalksProvider.class.getSimpleName();
 
     public void testLoadWalksContent() {
+        // upload the data
         try {
             WalksFileLoader.loadWalksDatabaseFromFiles(mContext);
         } catch (IOException e) {
             fail("Exception while opening Wildlife.csv. " + e.toString());
         }
+
+        // do some test queries on the data
+
     }
 
     public void testDeleteWalksDb() throws Throwable {
