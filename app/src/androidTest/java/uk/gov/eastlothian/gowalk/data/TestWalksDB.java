@@ -70,7 +70,7 @@ public class TestWalksDb extends AndroidTestCase {
         for (Map.Entry<String, Object> entry : valueSet) {
             String columnName = entry.getKey();
             int idx = valueCursor.getColumnIndex(columnName);
-            assertFalse("Key: " + columnName + " not found.", idx == -1);
+            assertFalse("Key: " + columnName + " not found in db.", idx == -1);
             String expectedValue = entry.getValue().toString();
             assertEquals(expectedValue, valueCursor.getString(idx));
         }
@@ -85,6 +85,7 @@ public class TestWalksDb extends AndroidTestCase {
         values.put(RouteEntry.COLUMN_PATH_TYPE, "Existing Path");
         values.put(RouteEntry.COLUMN_LENGTH, 706);
         values.put(RouteEntry.COLUMN_SURFACE, "Tarmac/Gravel");
+        values.put(RouteEntry.COLUMN_DESCRIPTION, "Part of Haddington’s local path network.");
         return values;
     }
     public static ContentValues createSimpleAreaValues() {

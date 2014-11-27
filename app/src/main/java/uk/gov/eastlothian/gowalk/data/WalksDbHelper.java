@@ -34,6 +34,7 @@ public class WalksDbHelper extends SQLiteOpenHelper {
                     .addTextColumn(RouteEntry.COLUMN_PATH_TYPE)
                     .addTextColumn(RouteEntry.COLUMN_LENGTH)
                     .addTextColumn(RouteEntry.COLUMN_SURFACE)
+                    .addTextColumn(RouteEntry.COLUMN_DESCRIPTION)
                     .buildQuery();
 
         final String SQL_CREATE_AREA_TABLE =

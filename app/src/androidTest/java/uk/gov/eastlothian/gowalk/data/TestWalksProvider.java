@@ -3,14 +3,10 @@ package uk.gov.eastlothian.gowalk.data;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.test.AndroidTestCase;
-import android.util.Log;
 
-import java.util.Map;
-import java.util.Set;
+import java.io.IOException;
 
 import uk.gov.eastlothian.gowalk.data.WalksContract.AreaEntry;
 import uk.gov.eastlothian.gowalk.data.WalksContract.LogEntry;
@@ -24,6 +20,14 @@ import uk.gov.eastlothian.gowalk.data.WalksContract.WildlifeOnRouteEntry;
  */
 public class TestWalksProvider extends AndroidTestCase {
     public static final String LOG_TAG = TestWalksProvider.class.getSimpleName();
+
+    public void testLoadWalksContent() {
+        try {
+            WalksFileLoader.loadWalksDatabaseFromFiles(mContext);
+        } catch (IOException e) {
+            fail("Exception while opening Wildlife.csv. " + e.toString());
+        }
+    }
 
     public void testDeleteWalksDb() throws Throwable {
         mContext.deleteDatabase(WalksDbHelper.DB_NAME);
@@ -53,10 +57,6 @@ public class TestWalksProvider extends AndroidTestCase {
     }
 
     public void testInsertReadProvider() {
-        // get a writable database
-        WalksDbHelper dbHelper = new WalksDbHelper(mContext);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         // test route
         ContentValues routeValues = TestWalksDb.createSimpleRouteValues();
         Uri routeUri = mContext.getContentResolver().insert(RouteEntry.CONTENT_URI, routeValues);
@@ -89,8 +89,7 @@ public class TestWalksProvider extends AndroidTestCase {
 
         // test areas the the route crosses
         ContentValues routeInAreaValues = TestWalksDb.createSimpleRoutesInAreasValues(routeId, areaId);
-        long routeInAreaId = db.insert(RouteInAreaEntry.TABLE_NAME, null, routeInAreaValues);
-        assertTrue("Failed to insert row into " + RouteInAreaEntry.TABLE_NAME, routeInAreaId != -1);
+        Uri routeInAreaUri = mContext.getContentResolver().insert(RouteInAreaEntry.CONTENT_URI, routeInAreaValues);
         Cursor areasForRouteCursor = mContext.getContentResolver().query(
             RouteEntry.buildAreasForRouteUri(routeId),
             null, null, null, null);
@@ -119,8 +118,7 @@ public class TestWalksProvider extends AndroidTestCase {
 
         // test wildlife on the route
         ContentValues wildlifeOnRouteValues = TestWalksDb.createSimpleWildlifeOnRoute(routeId, wildlifeId);
-        long wildlifeOnRouteId = db.insert(WildlifeOnRouteEntry.TABLE_NAME, null, wildlifeOnRouteValues);
-        assertTrue("Failed to insert row into " + WildlifeOnRouteEntry.TABLE_NAME, wildlifeOnRouteId != -1);
+        Uri wildlifeOnRouteUri = mContext.getContentResolver().insert(WildlifeOnRouteEntry.CONTENT_URI, wildlifeOnRouteValues);
         Cursor wildlifeOnRouteCursor = mContext.getContentResolver().query(
             RouteEntry.buildWildlifeOnRouteUri(routeId),
             null, null, null, null);
@@ -147,7 +145,5 @@ public class TestWalksProvider extends AndroidTestCase {
             LogEntry.buildLogEntrysUri(logEntryId),
             null, null, null, null);
         TestWalksDb.validateCursor(logEntryFromIdCursor, logEntryValues);
-
-        db.close();
     }
 }

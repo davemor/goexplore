@@ -48,6 +48,7 @@ public class WalksContract {
         public static final String COLUMN_PATH_TYPE = "path_type";
         public static final String COLUMN_LENGTH = "length";
         public static final String COLUMN_SURFACE = "surface";
+        public static final String COLUMN_DESCRIPTION = "description";
 
         // query uris builder helpers
         public static Uri buildRouteUri(long id) {
@@ -100,6 +101,10 @@ public class WalksContract {
         public static final String TABLE_NAME = "route_in_area";
         public static final String COLUMN_ROUTE_KEY = "route_id";
         public static final String COLUMN_AREA_KEY = "area_id";
+
+        public static Uri buildRouteInAreaUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
     /**
      * Wildlife Data
@@ -146,6 +151,9 @@ public class WalksContract {
         public static final String COLUMN_ROUTE_KEY = "route_id";
         public static final String COLUMN_WILDLIFE_KEY = "wildlife_id";
 
+        public static Uri buildWildlifeOnRouteUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
     /**
      * User Generated Content
