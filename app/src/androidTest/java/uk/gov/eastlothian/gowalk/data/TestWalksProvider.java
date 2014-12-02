@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.test.AndroidTestCase;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -31,6 +32,13 @@ public class TestWalksProvider extends AndroidTestCase {
 
         // do some test queries on the data
 
+        // get all the routes
+        Cursor routeCursor = mContext.getContentResolver().query(RouteEntry.CONTENT_URI,
+                                                                 null, null, null, null);
+        assertTrue(routeCursor.moveToFirst());
+        int count = routeCursor.getCount();
+        // printCursor(routeCursor);
+        assertTrue(count == 326);
     }
 
     public void testDeleteWalksDb() throws Throwable {
@@ -149,5 +157,20 @@ public class TestWalksProvider extends AndroidTestCase {
             LogEntry.buildLogEntrysUri(logEntryId),
             null, null, null, null);
         TestWalksDb.validateCursor(logEntryFromIdCursor, logEntryValues);
+    }
+
+    private void printCursor(Cursor cursor) {
+        if (cursor.moveToFirst()) {
+            do {
+                StringBuilder sb = new StringBuilder();
+                int columnsQty = cursor.getColumnCount();
+                for (int idx = 0; idx < columnsQty; ++idx) {
+                    sb.append(cursor.getString(idx));
+                    if (idx < columnsQty - 1)
+                        sb.append("; ");
+                }
+                Log.v(LOG_TAG, String.format("Row: %d, Values: %s", cursor.getPosition(), sb.toString()));
+            } while (cursor.moveToNext()) ;
+        }
     }
 }

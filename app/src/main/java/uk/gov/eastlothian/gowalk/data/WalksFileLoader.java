@@ -53,26 +53,39 @@ public class WalksFileLoader {
         try {
             JSONObject routesJson = new JSONObject(routesJsonStr);
             JSONArray paths = routesJson.getJSONArray("features");
+            Log.d(LOG_TAG, "" + paths.length());
             for (int idx=0; idx < paths.length(); ++idx) {
 
                 // get the json objects out the document tree
                 JSONObject path = paths.getJSONObject(idx);
-                JSONObject properties = path.getJSONObject("properties");
-                JSONArray coordinatesArray = path.getJSONObject("geometry")
-                                                 .getJSONArray("coordinates");
+
+                String coordinates = "[]";
+                if(!path.isNull("geometry")) {
+                    JSONObject geometryObj = path.getJSONObject("geometry");
+                    JSONArray coordinatesArray = geometryObj.getJSONArray("coordinates");
+                    coordinates = coordinatesArray.toString();
+                }
 
                 // get the values out of the json object
-                int routeNumber = properties.getInt("route_no");
-                String coordinates = coordinatesArray.toString();
-                String pathType = properties.getString("path_type");
-                int length = properties.getInt("length");
-                String surface = properties.getString("surface");
-                if(surface.equalsIgnoreCase("null")) {
-                    surface = "unknown";
-                }
-                String description = descriptions.get(routeNumber);
-                if(description == null || description.equalsIgnoreCase("null")) {
-                    description = "no description available";
+                int routeNumber = -1;
+                String pathType = "unknown";
+                int length = 0;
+                String surface = "unknown";
+                String description = "no description available";
+
+                if(!path.isNull("properties")) {
+                    JSONObject properties = path.getJSONObject("properties");
+                    routeNumber = properties.getInt("route_no");
+                    pathType = properties.getString("path_type");
+                    length = properties.getInt("length");
+                    surface = properties.getString("surface");
+                    if (surface.equalsIgnoreCase("null")) {
+                        surface = "unknown";
+                    }
+                    description = descriptions.get(routeNumber);
+                    if (description == null || description.equalsIgnoreCase("null")) {
+                        description = "no description available";
+                    }
                 }
 
                 // associate the values with table names
@@ -83,6 +96,9 @@ public class WalksFileLoader {
                 values.put(WalksContract.RouteEntry.COLUMN_LENGTH, length);
                 values.put(WalksContract.RouteEntry.COLUMN_SURFACE, surface);
                 values.put(WalksContract.RouteEntry.COLUMN_DESCRIPTION, description);
+
+                Log.d(LOG_TAG, "idx: " + idx);
+
                 valuesList.add(values);
             }
         } catch (JSONException e) {
