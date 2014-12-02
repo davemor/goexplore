@@ -7,7 +7,40 @@
     tools:context="uk.gov.eastlothian.gowalk.ui.StartActivity$PlaceholderFragment"
     android:background="@color/background_color">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_start_core_paths"
+        android:id="@+id/button_start_core_paths"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        style="@style/start_activity_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_start_wildlife"
+        android:id="@+id/button_start_wildlife"
+        android:layout_below="@+id/button_start_core_paths"
+        android:layout_centerHorizontal="true"
+        style="@style/start_activity_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_start_logbook"
+        android:id="@+id/button_start_logbook"
+        android:layout_below="@+id/button_start_wildlife"
+        android:layout_centerHorizontal="true"
+        style="@style/start_activity_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_start_about"
+        android:id="@+id/button_start_about"
+        android:layout_below="@+id/button_start_logbook"
+        android:layout_centerHorizontal="true"
+        style="@style/start_activity_button" />
 
 </RelativeLayout>
