@@ -7,7 +7,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <provider
             android:name="uk.gov.eastlothian.gowalk.data.WalksProvider"
             android:authorities="uk.gov.eastlothian.gowalk" />
@@ -15,11 +14,16 @@
         <activity
             android:name="uk.gov.eastlothian.gowalk.ui.StartActivity"
             android:label="@string/title_activity_start"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.RoutesActivity"
+            android:label="@string/title_activity_paths_list" >
         </activity>
     </application>
 
