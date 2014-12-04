@@ -1,5 +1,6 @@
 package uk.gov.eastlothian.gowalk.ui;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
@@ -92,21 +93,20 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // called when a new Loader needs to be created
-        CursorLoader cursorLoader;
-        if(id != -1) {
-            // create a cursor that gets all the routes in the specified area
-            Uri routesUri = WalksContract.AreaEntry.buildRoutesInAreaUri(id);
-            cursorLoader = new CursorLoader(getActivity(), routesUri, ROUTES_PROJECTION,
-                                            null, null, null);
-        } else {
-            // create a cursor that gets all the areas
-            /*
-            Uri areasUri = WalksContract.AreaEntry.CONTENT_URI;
-            cursorLoader = new CursorLoader(getActivity(), areasUri, null, // AREA_PROJECTION,
-                                            null, null, null);
-            */
-            cursorLoader = new CursorLoader(getActivity(), WalksContract.AreaEntry.CONTENT_URI,
-                    null, null, null, null);
+        CursorLoader cursorLoader = null;
+        Activity activity = getActivity();
+        if (activity != null) {
+            if (id != -1) {
+                // create a cursor that gets all the routes in the specified area
+                Uri routesUri = WalksContract.AreaEntry.buildRoutesInAreaUri(id);
+                cursorLoader = new CursorLoader(getActivity(), routesUri, ROUTES_PROJECTION,
+                        null, null, null);
+            } else {
+                // create a cursor that gets all the areas
+                Uri areasUri = WalksContract.AreaEntry.CONTENT_URI;
+                cursorLoader = new CursorLoader(getActivity(), areasUri, null, // AREA_PROJECTION,
+                        null, null, null);
+            }
         }
         return cursorLoader;
     }
