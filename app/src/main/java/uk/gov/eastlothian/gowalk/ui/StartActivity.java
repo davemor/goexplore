@@ -10,12 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.File;
-import java.io.IOException;
-
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksDataLoader;
-import uk.gov.eastlothian.gowalk.data.WalksDbHelper;
 
 public class StartActivity extends Activity {
 
@@ -32,7 +28,7 @@ public class StartActivity extends Activity {
         }
         // set up some globals
         WalksDataLoader.initDatabase(this);
-        RouteColors.setup(this);
+        AreaColors.setup(this);
     }
 
     @Override

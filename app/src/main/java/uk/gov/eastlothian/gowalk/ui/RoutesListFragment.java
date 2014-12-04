@@ -1,6 +1,8 @@
 package uk.gov.eastlothian.gowalk.ui;
 
 import android.app.Activity;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +14,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,7 +153,6 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
     }
 
     public static class RoutesListAdapter extends SimpleCursorTreeAdapter {
-
         private RoutesActivity mActivity;
         private RoutesListFragment mFragment;
         private SparseArray<Integer> mGroupMap;
@@ -164,6 +166,27 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             mActivity = (RoutesActivity) context;
             mFragment = fragment;
             mGroupMap = new SparseArray<Integer>();
+        }
+
+        @Override
+        protected void bindChildView(View view, Context context, Cursor cursor, boolean isLastChild) {
+            super.bindChildView(view, context, cursor, isLastChild);
+            View circle = view.findViewById(R.id.list_item_circle);
+            GradientDrawable shape = (GradientDrawable) circle.getBackground();
+
+            int keyIndex = cursor.getColumnIndex(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY);
+            long id = cursor.getLong(keyIndex);
+            shape.setStroke(3, getAreaColor(id));
+        }
+
+        @Override
+        protected void bindGroupView(View view, Context context, Cursor cursor, boolean isExpanded) {
+            super.bindGroupView(view, context, cursor, isExpanded);
+
+            View rect = view.findViewById(R.id.list_group_rectangle);
+            int keyIndex = cursor.getColumnIndex(WalksContract.AreaEntry._ID);
+            long id = cursor.getLong(keyIndex);
+            rect.setBackgroundColor(getAreaColor(id));
         }
 
         @Override
@@ -182,6 +205,11 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
 
         public SparseArray<Integer> getAreaMap() {
             return mGroupMap;
+        }
+
+        private int getAreaColor(long id) {
+            int[] colors = AreaColors.getColors();
+            return colors[(int)id%colors.length];
         }
     }
 }

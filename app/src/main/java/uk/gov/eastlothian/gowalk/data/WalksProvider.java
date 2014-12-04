@@ -210,7 +210,8 @@ public class WalksProvider extends ContentProvider {
                     "route.path_type, " +
                     "route.length, " +
                     "route.surface, " +
-                    "route.description " +
+                    "route.description, " +
+                    "route_in_area.area_id " +
                     "FROM route " +
                     "INNER JOIN route_in_area " +
                     "ON route_in_area.route_id = route._ID " +

@@ -8,7 +8,7 @@ import uk.gov.eastlothian.gowalk.R;
 /**
  * Created by davidmorrison on 04/12/14.
  */
-public class RouteColors {
+public class AreaColors {
     private static int[] colors = null;
 
     public static int[] getColors() {
