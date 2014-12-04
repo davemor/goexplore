@@ -5,8 +5,11 @@ package uk.gov.eastlothian.gowalk.data;
  */
 
 import android.content.ContentUris;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.provider.BaseColumns;
+
+import uk.gov.eastlothian.gowalk.R;
 
 /**
  * Defines table and column names for the walks database

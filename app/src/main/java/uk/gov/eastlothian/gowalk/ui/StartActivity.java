@@ -30,7 +30,9 @@ public class StartActivity extends Activity {
                     .add(R.id.container, new StartFragment())
                     .commit();
         }
+        // set up some globals
         WalksDataLoader.initDatabase(this);
+        RouteColors.setup(this);
     }
 
     @Override

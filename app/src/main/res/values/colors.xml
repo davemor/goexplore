@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background_color">#48E07F</color>
+
+    <array name="route_colors">
+        <item>#9424ac</item>
+        <item>#0da397</item>
+        <item>#a3755e</item>
+        <item>#0190ff</item>
+        <item>#e40303</item>
+        <item>#797979</item>
+        <item>#00a255</item>
+        <item>#ce2dc1</item>
+        <item>#0d12a2</item>
+        <item>#fc9234</item>
+        <item>#460ea3</item>
+        <item>#a1e924</item>
+        <item>#9b0000</item>
+        <item>#0fa2a1</item>
+        <item>#ff5500</item>
+    </array>
+
 </resources>
