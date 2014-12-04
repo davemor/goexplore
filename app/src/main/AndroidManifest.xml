@@ -17,13 +17,17 @@
             android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.RoutesActivity"
-            android:label="@string/title_activity_paths_list" >
+            android:label="@string/title_activity_paths_list"
+            android:parentActivityName="uk.gov.eastlothian.gowalk.ui.StartActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.gov.eastlothian.gowalk.ui.StartActivity" />
         </activity>
     </application>
 

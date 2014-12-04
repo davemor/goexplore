@@ -3,6 +3,9 @@ package uk.gov.eastlothian.gowalk.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.io.IOException;
 
 import uk.gov.eastlothian.gowalk.data.WalksContract.RouteEntry;
 import uk.gov.eastlothian.gowalk.data.WalksContract.AreaEntry;
@@ -16,11 +19,15 @@ import uk.gov.eastlothian.gowalk.data.WalksContract.LogEntry;
  */
 public class WalksDbHelper extends SQLiteOpenHelper {
 
+    private static final String LOG_TAG = WalksDbHelper.class.getSimpleName();
+
     public static final String DB_NAME = "walks.db";
     private static final int DB_VERSION = 1;
+    private Context mContext;
 
     public WalksDbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        mContext = context;
     }
 
     @Override
@@ -91,6 +98,15 @@ public class WalksDbHelper extends SQLiteOpenHelper {
         database.execSQL(SQL_CREATE_WILDLIFE_TABLE);
         database.execSQL(SQL_CREATE_WILDLIFE_ON_ROUTE_TABLE);
         database.execSQL(SQL_CREATE_LOG_ENTRY_TABLE);
+
+        // populate the tables
+        /*
+        try {
+            WalksFileLoader.loadWalksDatabaseFromFiles(mContext);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error loading walks database from files: " + e.toString());
+        }
+        */
     }
 
     @Override

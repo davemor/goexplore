@@ -1,20 +1,13 @@
 package uk.gov.eastlothian.gowalk.data;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.database.Cursor;
-import android.net.Uri;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
 import java.io.IOException;
 
 import uk.gov.eastlothian.gowalk.data.WalksContract.AreaEntry;
-import uk.gov.eastlothian.gowalk.data.WalksContract.LogEntry;
 import uk.gov.eastlothian.gowalk.data.WalksContract.RouteEntry;
-import uk.gov.eastlothian.gowalk.data.WalksContract.RouteInAreaEntry;
-import uk.gov.eastlothian.gowalk.data.WalksContract.WildlifeEntry;
-import uk.gov.eastlothian.gowalk.data.WalksContract.WildlifeOnRouteEntry;
 
 /**
  * Created by davidmorrison on 20/11/14.
@@ -22,10 +15,14 @@ import uk.gov.eastlothian.gowalk.data.WalksContract.WildlifeOnRouteEntry;
 public class TestWalksProvider extends AndroidTestCase {
     public static final String LOG_TAG = TestWalksProvider.class.getSimpleName();
 
+    public void testDeleteWalksDb() throws Throwable {
+        mContext.deleteDatabase(WalksDbHelper.DB_NAME);
+    }
+
     public void testLoadWalksContent() {
         // upload the data
         try {
-            WalksFileLoader.loadWalksDatabaseFromFiles(mContext);
+            WalksDataLoader.loadWalksDatabaseFromFiles(mContext);
         } catch (IOException e) {
             fail("Exception while opening Wildlife.csv. " + e.toString());
         }
@@ -34,13 +31,40 @@ public class TestWalksProvider extends AndroidTestCase {
 
         // get all the routes
         Cursor routeCursor = mContext.getContentResolver().query(RouteEntry.CONTENT_URI,
-                                                                 null, null, null, null);
+                null, null, null, null);
         assertTrue(routeCursor.moveToFirst());
         int count = routeCursor.getCount();
         // printCursor(routeCursor);
-        assertTrue(count == 326);
+        // assertTrue(count == 326);
+
+        // get all the areas
+        Cursor areasCursor = mContext.getContentResolver().query(AreaEntry.CONTENT_URI,
+                null, null, null, null);
+        assertTrue(areasCursor.moveToFirst());
+        int areaCount = areasCursor.getCount();
+        printCursor(areasCursor);
+
+
+        // get the routes for an area
+        areasCursor.moveToFirst();
+        do {
+            int idIndex = areasCursor.getColumnIndex(AreaEntry._ID);
+            long id = areasCursor.getLong(idIndex);
+            int nameIndex = areasCursor.getColumnIndex(AreaEntry.COLUMN_AREA_NAME);
+            String areaName = areasCursor.getString(nameIndex);
+            // query the routes for the area
+            Cursor routesInArea = mContext.getContentResolver().query(
+                    AreaEntry.buildRoutesInAreaUri(id),
+                    null, null, null, null);
+            Log.d(LOG_TAG, "Routes in area id: " + id + ", name: " + areaName);
+            printCursor(routesInArea);
+            routesInArea.close();
+        } while (areasCursor.moveToNext());
+
+        Log.d("da","da");
     }
 
+    /*
     public void testDeleteWalksDb() throws Throwable {
         mContext.deleteDatabase(WalksDbHelper.DB_NAME);
     }
@@ -158,7 +182,7 @@ public class TestWalksProvider extends AndroidTestCase {
             null, null, null, null);
         TestWalksDb.validateCursor(logEntryFromIdCursor, logEntryValues);
     }
-
+*/
     private void printCursor(Cursor cursor) {
         if (cursor.moveToFirst()) {
             do {
@@ -169,8 +193,9 @@ public class TestWalksProvider extends AndroidTestCase {
                     if (idx < columnsQty - 1)
                         sb.append("; ");
                 }
-                Log.v(LOG_TAG, String.format("Row: %d, Values: %s", cursor.getPosition(), sb.toString()));
+                Log.d(LOG_TAG, String.format("Row: %d, Values: %s", cursor.getPosition(), sb.toString()));
             } while (cursor.moveToNext()) ;
         }
     }
+
 }

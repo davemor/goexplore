@@ -1,34 +1,52 @@
 package uk.gov.eastlothian.gowalk.ui;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import uk.gov.eastlothian.gowalk.R;
 
-public class RoutesActivity extends Activity {
+public class RoutesActivity extends FragmentActivity implements ActionBar.TabListener{
+
+    // used by the tabs
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routes);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+
+        // this adapter returns a fragment for each section of the page
+        mSectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+
+        // set the view pager to use the adapter
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // set up the action bar so it shows the tabs
+        ActionBar bar = getActionBar();
+        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        bar.setDisplayShowTitleEnabled(false);
+        ActionBar.Tab areasTab = getActionBar().newTab()
+                .setText(R.string.title_routes_list_tab)
+                .setTabListener(this);
+        bar.addTab(areasTab);
+        ActionBar.Tab mapTab = getActionBar().newTab()
+                .setText(R.string.title_routes_map_tab)
+                .setTabListener(this);
+        bar.addTab(mapTab);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_paths_list, menu);
+        getMenuInflater().inflate(R.menu.menu_paths, menu);
         return true;
     }
 
@@ -47,19 +65,18 @@ public class RoutesActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
 
-        public PlaceholderFragment() {
-        }
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_routes_list, container, false);
-            return rootView;
-        }
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 }

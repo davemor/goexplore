@@ -23,6 +23,8 @@ import uk.gov.eastlothian.gowalk.data.WalksContract.LogEntry;
 public class TestWalksDb extends AndroidTestCase {
     public static final String LOG_TAG = TestWalksDb.class.getSimpleName();
 
+    /*
+
     public void testCreateWalksDb() throws Throwable {
         mContext.deleteDatabase(WalksDbHelper.DB_NAME);
         SQLiteDatabase db = new WalksDbHelper(this.mContext)
@@ -124,4 +126,6 @@ public class TestWalksDb extends AndroidTestCase {
         values.put(LogEntry.COLUMN_IMAGE, "myphoto");
         return values;
     }
+
+*/
 }

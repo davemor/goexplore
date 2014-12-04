@@ -84,9 +84,14 @@ public class WalksContract {
         public static Uri buildRoutesInAreaUri(long id) {
             return buildAreaUri(id).buildUpon().appendPath("route").build();
         }
+        public static Uri getRoutesForAreas() {
+            return CONTENT_URI.buildUpon().appendPath("routes").build();
+        }
+
         public static String getAreaFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
+
     }
     public static final class RouteInAreaEntry implements BaseColumns {
         // content provider uris

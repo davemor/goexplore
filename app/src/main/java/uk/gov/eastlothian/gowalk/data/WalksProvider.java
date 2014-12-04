@@ -23,6 +23,7 @@ public class WalksProvider extends ContentProvider {
     private static final int ROUTE_IN_AREA_ID = 301;        // single row of route_in_area table
     private static final int ROUTES_FOR_AREA = 302;         // list of routes in an area from id
     private static final int AREAS_FOR_ROUTE = 303;         // list of areas route passes though from id
+    private static final int ROUTES_FOR_AREAS = 304;        // get all the routes for all the areas in order
     private static final int WILDLIFE = 400;                // list of wildlife
     private static final int WILDLIFE_ID = 401;             // single wildlife from id
     private static final int WILDLIFE_ON_ROUTE = 500;       // list of rows in junction table wildlife_on_route
@@ -49,6 +50,7 @@ public class WalksProvider extends ContentProvider {
         matcher.addURI(authority, WalksContract.PATH_AREA, AREA);
         matcher.addURI(authority, WalksContract.PATH_AREA + "/#", AREA_ID);
         matcher.addURI(authority, WalksContract.PATH_AREA + "/#/route", ROUTES_FOR_AREA);
+        matcher.addURI(authority, WalksContract.PATH_AREA + "/routes", ROUTES_FOR_AREAS);
 
         // route_in_area junction table
         matcher.addURI(authority, WalksContract.PATH_ROUTE_IN_AREA, ROUTE_IN_AREA);
@@ -117,6 +119,24 @@ public class WalksProvider extends ContentProvider {
                                           "." + WalksContract.RouteInAreaEntry.COLUMN_ROUTE_KEY +
                                           "=?;";
                 rtnCursor = mOpenHelper.getReadableDatabase().rawQuery(query, subs);
+            }
+            break;
+            case ROUTES_FOR_AREAS: {
+                String query = "SELECT area._ID, " +
+                        "area.name, " +
+                        "route._ID, " +
+                        "route.route_number, " +
+                        "route.coordinates, " +
+                        "route.path_type, " +
+                        "route.length, " +
+                        "route.surface " +
+                        "FROM area " +
+                        "INNER JOIN (" +
+                        "route INNER JOIN " +
+                        "route_in_area " +
+                        "ON route_in_area.route_id = route._ID) " +
+                        "ON area._ID = route_in_area.area_id ORDER BY 1, 2;";
+                rtnCursor = mOpenHelper.getReadableDatabase().rawQuery(query, new String[]{});
             }
             break;
             case WILDLIFE_FOR_ROUTE: {

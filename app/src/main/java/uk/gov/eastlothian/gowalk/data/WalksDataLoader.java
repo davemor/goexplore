@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,14 +27,25 @@ import java.util.Map;
  *
  * Created by davidmorrison on 26/11/14.
  */
-public class WalksFileLoader {
-    public static final String LOG_TAG = WalksFileLoader.class.getSimpleName();
+public class WalksDataLoader {
+    public static final String LOG_TAG = WalksDataLoader.class.getSimpleName();
 
-    static void loadWalksDatabaseFromFiles(Context context) throws IOException{
+    public static void initDatabase(Context context) {
+        File dbFile = context.getDatabasePath(WalksDbHelper.DB_NAME);
+        if(!dbFile.exists()) {
+            try {
+                loadWalksDatabaseFromFiles(context);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void loadWalksDatabaseFromFiles(Context context) throws IOException {
         AssetManager asserts = context.getAssets();
         Map<Integer, String> descriptions = loadRouteDescriptionsFromCSV(asserts.open("Routes.csv"));
         insertRoutesIntoWalksDatabase(asserts.open("core_paths.json"), descriptions, context);
-        WalksFileLoader.loadWildlifeDbFromCSV(asserts.open("Wildlife.csv"), context);
+        WalksDataLoader.loadWildlifeDbFromCSV(asserts.open("Wildlife.csv"), context);
         loadRoutesInAreas(asserts.open("RoutesInAreas.csv"), context);
     }
 
@@ -243,7 +255,7 @@ public class WalksFileLoader {
                 long routeId = getRouteIdFromRouteNumber(routeNumber, context);
 
                 // find the area and add the route id to it's routes
-                String areaName = rowData[1];
+                String areaName = rowData[1].replace("\"", ""); // remove all the quotes
                 if (areas.containsKey(areaName)) {
                     areas.get(areaName).add(routeId);
                 } else {
@@ -270,6 +282,12 @@ public class WalksFileLoader {
                     areaInRouteValues[idx].put(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY, areaId);
                     ++idx;
                 }
+/*
+                Log.d(LOG_TAG, "Content Values for " + areaId);
+                for(int i=0; i < areaInRouteValues.length; ++i) {
+                    printContentValues(areaInRouteValues[i]);
+                }
+                */
                 context.getContentResolver().bulkInsert(WalksContract.RouteInAreaEntry.CONTENT_URI, areaInRouteValues);
             }
         } catch (IOException e) {
@@ -293,8 +311,16 @@ public class WalksFileLoader {
                 null);
         long routeId = -1;
         if (cursor.moveToFirst()) {
-            routeId = cursor.getColumnIndex(WalksContract.RouteEntry._ID);
+            int routeIndex = cursor.getColumnIndex(WalksContract.RouteEntry._ID);
+            routeId = cursor.getLong(routeIndex);
         }
         return routeId;
+    }
+
+    // debug
+    private static void printContentValues(ContentValues values) {
+        for(Map.Entry<String, Object> pair : values.valueSet()) {
+            Log.d(LOG_TAG, pair.getKey() + " : " + pair.getValue());
+        }
     }
 }
