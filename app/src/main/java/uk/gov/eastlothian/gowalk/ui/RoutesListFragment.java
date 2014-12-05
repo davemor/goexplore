@@ -1,6 +1,7 @@
 package uk.gov.eastlothian.gowalk.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.support.v4.app.Fragment;
@@ -83,6 +84,19 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             });
         mListView.setAdapter(mRoutesAdapter);
 
+        // set up the listener for when user clicks on child
+        mListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView listView, View view,
+                                        int groupPos, int childPos, long id) {
+                Intent intent = new Intent(getActivity(), RouteDetailActivity.class);
+                intent.putExtra("route_id", mRoutesAdapter.getRouteId(groupPos, childPos));
+                intent.putExtra("area_id", mRoutesAdapter.getAreaIdFromGroupPos(groupPos));
+                startActivity(intent);
+                return false;
+            }
+        });
+
         // set up the loaded based on the loader state
         LoaderManager loaderManager = ((FragmentActivity)getActivity()).getSupportLoaderManager();
         Loader<Cursor> loader = loaderManager.getLoader(-1);
@@ -156,6 +170,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
         private RoutesActivity mActivity;
         private RoutesListFragment mFragment;
         private SparseArray<Integer> mGroupMap;
+        private SparseArray<SparseArray<Long>> mChildMaps;
 
         public RoutesListAdapter(Context context, RoutesListFragment fragment,
                                  int groupLayout, int childLayout,
@@ -166,6 +181,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             mActivity = (RoutesActivity) context;
             mFragment = fragment;
             mGroupMap = new SparseArray<Integer>();
+            mChildMaps = new SparseArray<SparseArray<Long>>();
         }
 
         @Override
@@ -174,9 +190,17 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             View circle = view.findViewById(R.id.list_item_circle);
             GradientDrawable shape = (GradientDrawable) circle.getBackground();
 
-            int keyIndex = cursor.getColumnIndex(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY);
-            long id = cursor.getLong(keyIndex);
-            shape.setStroke(3, getAreaColor(id));
+            int areaIdColIndex = cursor.getColumnIndex(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY);
+            long areaId = cursor.getLong(areaIdColIndex);
+            shape.setStroke(3, getAreaColor(areaId));
+
+            // insert the id of the child into a map at this position
+            int childPos = cursor.getPosition();
+            int childIdColIndex = cursor.getColumnIndex(WalksContract.RouteEntry._ID);
+            long childId = cursor.getLong(childIdColIndex);
+            SparseArray<Long> childMap = mChildMaps.get((int)areaId, new SparseArray<Long>());
+            childMap.put(childPos, childId);
+            mChildMaps.put((int)areaId, childMap);
         }
 
         @Override
@@ -205,6 +229,15 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
 
         public SparseArray<Integer> getAreaMap() {
             return mGroupMap;
+        }
+
+        public Long getRouteId(int groupPos, int childPos) {
+            return mChildMaps.get(groupPos).get(childPos);
+        }
+
+        private int getAreaIdFromGroupPos(int groupPos) {
+            int index = mGroupMap.indexOfValue(groupPos);
+            return mGroupMap.keyAt(index);
         }
 
         private int getAreaColor(long id) {
