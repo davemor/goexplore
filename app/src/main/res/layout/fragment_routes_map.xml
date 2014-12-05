@@ -4,10 +4,6 @@
     android:padding="0pt"
     tools:context="uk.gov.eastlothian.gowalk.ui.RoutesActivity$PlaceholderFragment">
 
-    <TextView android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is the routes map" />
-
     <fragment
         android:id="@+id/location_map"
         android:layout_width="match_parent"

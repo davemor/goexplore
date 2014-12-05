@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background_color">#48E07F</color>
+    <color name="white">#ffffff</color>
+    <color name="purple">#9424ac</color>
 
     <array name="route_colors">
         <item>#9424ac</item>

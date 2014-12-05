@@ -89,9 +89,12 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             @Override
             public boolean onChildClick(ExpandableListView listView, View view,
                                         int groupPos, int childPos, long id) {
+                int areaId = mRoutesAdapter.getAreaIdFromGroupPos(groupPos); // TODO: change the indices over to longs from ints to avoid this
+                Long routeId = mRoutesAdapter.getRouteId(areaId, childPos);
+
                 Intent intent = new Intent(getActivity(), RouteDetailActivity.class);
-                intent.putExtra("route_id", mRoutesAdapter.getRouteId(groupPos, childPos));
-                intent.putExtra("area_id", mRoutesAdapter.getAreaIdFromGroupPos(groupPos));
+                intent.putExtra("route_id", routeId);
+                intent.putExtra("area_id", new Long(areaId)); // TODO: change to a long all the way though
                 startActivity(intent);
                 return false;
             }
@@ -192,7 +195,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
 
             int areaIdColIndex = cursor.getColumnIndex(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY);
             long areaId = cursor.getLong(areaIdColIndex);
-            shape.setStroke(3, getAreaColor(areaId));
+            shape.setStroke(3, AreaColors.getAreaColor(areaId));
 
             // insert the id of the child into a map at this position
             int childPos = cursor.getPosition();
@@ -210,7 +213,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             View rect = view.findViewById(R.id.list_group_rectangle);
             int keyIndex = cursor.getColumnIndex(WalksContract.AreaEntry._ID);
             long id = cursor.getLong(keyIndex);
-            rect.setBackgroundColor(getAreaColor(id));
+            rect.setBackgroundColor(AreaColors.getAreaColor(id));
         }
 
         @Override
@@ -231,18 +234,13 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             return mGroupMap;
         }
 
-        public Long getRouteId(int groupPos, int childPos) {
-            return mChildMaps.get(groupPos).get(childPos);
+        public Long getRouteId(int areaId, int childPos) {
+            return mChildMaps.get(areaId).get(childPos);
         }
 
         private int getAreaIdFromGroupPos(int groupPos) {
             int index = mGroupMap.indexOfValue(groupPos);
             return mGroupMap.keyAt(index);
-        }
-
-        private int getAreaColor(long id) {
-            int[] colors = AreaColors.getColors();
-            return colors[(int)id%colors.length];
         }
     }
 }
