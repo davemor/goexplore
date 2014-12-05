@@ -16,7 +16,7 @@ public class AreaColors {
         return colors;
     }
 
-    public static void setup(Context context) {
+    private static void setup(Context context) {
         if(colors == null) {
             TypedArray ta = context.getResources()
                 .obtainTypedArray(R.array.route_colors);
@@ -28,7 +28,8 @@ public class AreaColors {
         }
     }
 
-    public static int getAreaColor(long id) {
+    public static int getAreaColor(Context context, long id) {
+        setup(context);
         int[] colors = AreaColors.getColors();
         return colors[(int)id%colors.length];
     }

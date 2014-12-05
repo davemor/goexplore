@@ -36,6 +36,7 @@ import java.util.List;
 
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksContract;
+import uk.gov.eastlothian.gowalk.model.Route;
 
 /**
  * Created by davidmorrison on 03/12/14.
@@ -86,6 +87,11 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(0, null, this);
@@ -99,16 +105,11 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        // use the cursor to add the routes to the map
-        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            // parse the coordinates
-            List<LatLng> coords = makeCoordsFromJsonStr(cursor.getString(ROUTE_COORDINATES));
-
-            if(coords.size() > 0) {
-                PolylineOptions lineOptions = new PolylineOptions();
-                lineOptions.addAll(coords);
-                mMap.addPolyline(lineOptions);
-            }
+        List<Route> routes = Route.fromCursor(cursor);
+        for (Route route : routes) {
+            PolylineOptions lineOptions = new PolylineOptions();
+            lineOptions.addAll(route.getCoordinates());
+            mMap.addPolyline(lineOptions);
         }
     }
 
@@ -117,17 +118,4 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
         getLoaderManager().restartLoader(0, null, this);
     }
 
-    List<LatLng> makeCoordsFromJsonStr(String coordinates) {
-        List<LatLng> rtnList = new ArrayList<LatLng>();
-        try {
-            JSONArray array = new JSONArray(coordinates).getJSONArray(0);
-            for(int idx = 0; idx < array.length(); ++idx) {
-                JSONArray pair = array.getJSONArray(idx);
-                rtnList.add(new LatLng(pair.getDouble(1), pair.getDouble(0)));
-            }
-        } catch (JSONException e) {
-            Log.d(LOG_TAG, "Error parsing route coordinates for map: " + e);
-        }
-        return rtnList;
-    }
 }

@@ -28,7 +28,6 @@ public class StartActivity extends Activity {
         }
         // set up some globals
         WalksDataLoader.initDatabase(this);
-        AreaColors.setup(this);
     }
 
     @Override

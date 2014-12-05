@@ -195,7 +195,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
 
             int areaIdColIndex = cursor.getColumnIndex(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY);
             long areaId = cursor.getLong(areaIdColIndex);
-            shape.setStroke(3, AreaColors.getAreaColor(areaId));
+            shape.setStroke(3, AreaColors.getAreaColor(mActivity, areaId));
 
             // insert the id of the child into a map at this position
             int childPos = cursor.getPosition();
@@ -213,7 +213,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             View rect = view.findViewById(R.id.list_group_rectangle);
             int keyIndex = cursor.getColumnIndex(WalksContract.AreaEntry._ID);
             long id = cursor.getLong(keyIndex);
-            rect.setBackgroundColor(AreaColors.getAreaColor(id));
+            rect.setBackgroundColor(AreaColors.getAreaColor(mActivity, id));
         }
 
         @Override
