@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Description of the area"
-                    android:id="@+id/textView"
+                    android:id="@+id/route_detail_area_description"
                     android:textStyle="italic"
                     android:textColor="@android:color/white" />
 

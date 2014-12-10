@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GoExplore.iml" filepath="$PROJECT_DIR$/GoExplore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GoWalk.iml" filepath="$PROJECT_DIR$/GoWalk.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

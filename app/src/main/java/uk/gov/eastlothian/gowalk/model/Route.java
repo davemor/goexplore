@@ -37,23 +37,23 @@ public class Route extends BaseRecord {
         this.description = description;
     }
 
+    private Route(Cursor cursor) {
+        this.id = getLong(cursor, RouteEntry._ID, -1);
+        this.routeNumber = getInt(cursor, RouteEntry.COLUMN_ROUTE_NUMBER, -1);
+        this.coordinates = convertCoordinates(getString(cursor, RouteEntry.COLUMN_COORDINATES, ""));
+        this.length = getInt(cursor, RouteEntry.COLUMN_LENGTH, 0);
+        this.surface = getString(cursor, RouteEntry.COLUMN_SURFACE, "Unknown");
+        this.description = getString(cursor, RouteEntry.COLUMN_DESCRIPTION, "");
+    }
+
     /*
      * This method will make a list of Routes from a cursor.
      * If the cursor doesn't have a column then it will set a default
      */
     public static List<Route> fromCursor(Cursor cursor) {
         List<Route> rtnList = new ArrayList<Route>();
-
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            long id = getLong(cursor, RouteEntry._ID, -1);
-            int routeNumber = getInt(cursor, RouteEntry.COLUMN_ROUTE_NUMBER, -1);
-            String coordinates = getString(cursor, RouteEntry.COLUMN_COORDINATES, "");
-            int length = getInt(cursor, RouteEntry.COLUMN_LENGTH, 0);
-            String surface = getString(cursor, RouteEntry.COLUMN_SURFACE, "Unknown");
-            String description = getString(cursor, RouteEntry.COLUMN_DESCRIPTION, "");
-
-            Route route = new Route(id, routeNumber, coordinates,
-                                    length, surface, description);
+            Route route = new Route(cursor);
             rtnList.add(route);
         }
 

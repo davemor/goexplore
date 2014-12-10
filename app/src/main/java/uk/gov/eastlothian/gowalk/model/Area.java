@@ -20,12 +20,15 @@ public class Area extends BaseRecord {
         this.name = name;
     }
 
+    private Area(Cursor cursor) {
+        this.id = getLong(cursor, AreaEntry._ID, -1);
+        this.name = getString(cursor, AreaEntry.COLUMN_AREA_NAME, "");
+    }
+
     public static List<Area> fromCursor(Cursor cursor) {
         List<Area> rtnList = new ArrayList<Area>();
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            long id = getLong(cursor, AreaEntry._ID, -1);
-            String name = getString(cursor, AreaEntry.COLUMN_AREA_NAME, "");
-            Area area = new Area(id, name);
+            Area area = new Area(cursor);
             rtnList.add(area);
         }
         return rtnList;
