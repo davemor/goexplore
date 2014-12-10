@@ -84,6 +84,24 @@ public class Route extends BaseRecord {
         return description;
     }
 
+    // helper functions
+    public LatLng centrePoint() {
+        // get the average of the lat long
+        double latCentre = 0.0;
+        double lngCentre = 0.0;
+        for (LatLng latLng : coordinates) {
+            latCentre += latLng.latitude;
+            lngCentre += latLng.longitude;
+        }
+        return new LatLng(latCentre/coordinates.size(), lngCentre/coordinates.size());
+    }
+    public LatLng startPoint() {
+        return coordinates.get(0);
+    }
+    public LatLng endPoint() {
+        return coordinates.get(coordinates.size()-1);
+    }
+
     // private
 
     private static List<LatLng> convertCoordinates(String coordinates) {

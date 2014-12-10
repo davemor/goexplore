@@ -19,6 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -78,6 +86,7 @@ public class RouteDetailActivity extends FragmentActivity {
         TextView areaDescriptionView;
         TextView routeLengthView;
         TextView routeNumberView;
+        GoogleMap mMap;
 
         long routeId;
         long areaId;
@@ -108,6 +117,7 @@ public class RouteDetailActivity extends FragmentActivity {
             areaDescriptionView = (TextView) rootView.findViewById(R.id.route_detail_area_description);
             routeLengthView = (TextView) rootView.findViewById(R.id.route_detail_length);
             routeNumberView = (TextView) rootView.findViewById(R.id.route_detail_route_num);
+            mMap = ((SupportMapFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.route_detail_mapview)).getMap();
 
             // set up a query to get the route information
             getLoaderManager().initLoader(AREA_QUERY_ID, null, this);
@@ -169,9 +179,36 @@ public class RouteDetailActivity extends FragmentActivity {
         }
 
         void bindRoute(Route route) {
+            // header
             routeNumberView.setText("" + route.getRouteNumber());
             routeDescriptionView.setText(route.getDescription());
             routeLengthView.setText("" + route.getLength());
+
+            // map
+            if (mMap != null) {
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                // put a marker on Haddington
+                mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(55.9552045, -2.7843538)).title("Haddington"));
+
+                // add marker for start and end
+                mMap.addMarker(new MarkerOptions().position(route.startPoint()).title("Start"));
+                mMap.addMarker(new MarkerOptions().position(route.endPoint()).title("End"));
+
+                // zoom in on East Lothian
+                CameraUpdate center = CameraUpdateFactory.newLatLng(route.centrePoint());
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(13);
+                mMap.moveCamera(center);
+                mMap.animateCamera(zoom);
+
+                // draw the route
+                int color = AreaColors.getAreaColor(getActivity(), areaId);
+                PolylineOptions polylineOptions = new PolylineOptions();
+                polylineOptions.addAll(route.getCoordinates());
+                polylineOptions.color(color);
+                mMap.addPolyline(polylineOptions);
+            }
         }
     }
 }
