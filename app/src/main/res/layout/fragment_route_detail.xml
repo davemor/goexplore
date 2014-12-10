@@ -87,6 +87,12 @@
             android:layout_height="250dp"
             class="com.google.android.gms.maps.SupportMapFragment" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/route_detail_accessibility_label"/>
+
     </LinearLayout>
 
 </RelativeLayout>

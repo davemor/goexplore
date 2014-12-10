@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.SimpleCursorTreeAdapter;
+import android.widget.TextView;
 
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksContract;
@@ -196,6 +197,11 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             int areaIdColIndex = cursor.getColumnIndex(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY);
             long areaId = cursor.getLong(areaIdColIndex);
             shape.setStroke(3, AreaColors.getAreaColor(mActivity, areaId));
+
+            // filter out the undrawable characters from the route descriptions
+            TextView descView = (TextView) view.findViewById(R.id.routes_list_child_description);
+            String description = descView.getText().toString();
+            Log.d("bla", description);
 
             // insert the id of the child into a map at this position
             int childPos = cursor.getPosition();
