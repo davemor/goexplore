@@ -25,7 +25,9 @@
         android:id="@+id/button_start_wildlife"
         android:layout_below="@+id/button_start_core_paths"
         android:layout_centerHorizontal="true"
-        style="@style/start_activity_button" />
+        style="@style/start_activity_button"
+        android:onClick="onViewWildlifeGuideClicked"
+        android:clickable="true"/>
 
     <Button
         android:layout_width="wrap_content"

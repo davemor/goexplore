@@ -14,5 +14,6 @@
     <string name="title_routes_map_tab">Map View</string>
     <string name="title_activity_route_detail">RouteDetailActivity</string>
     <string name="route_detail_surface_label">Surface</string>
+    <string name="title_activity_wildlife_guide">WildlifeGuideActivity</string>
 
 </resources>

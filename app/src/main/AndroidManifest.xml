@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <provider
-            android:name="uk.gov.eastlothian.gowalk.data.WalksProvider"
+            android:name=".data.WalksProvider"
             android:authorities="uk.gov.eastlothian.gowalk" />
 
         <meta-data
@@ -33,7 +33,7 @@
             android:value="AIzaSyCuyOI3aXqjw0mvDJOxeeJzuDjszcvO12o" />
 
         <activity
-            android:name="uk.gov.eastlothian.gowalk.ui.StartActivity"
+            android:name=".ui.StartActivity"
             android:label="@string/title_activity_start"
             android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
@@ -43,9 +43,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="uk.gov.eastlothian.gowalk.ui.RoutesActivity"
+            android:name=".ui.RoutesActivity"
             android:label="@string/title_activity_paths_list"
-            android:parentActivityName="uk.gov.eastlothian.gowalk.ui.StartActivity" >
+            android:parentActivityName=".ui.StartActivity" >
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -53,8 +53,12 @@
                 android:value="uk.gov.eastlothian.gowalk.ui.StartActivity" />
         </activity>
         <activity
-            android:name="uk.gov.eastlothian.gowalk.ui.RouteDetailActivity"
+            android:name=".ui.RouteDetailActivity"
             android:label="@string/title_activity_route_detail" >
+        </activity>
+        <activity
+            android:name=".ui.WildlifeGuideActivity"
+            android:label="@string/title_activity_wildlife_guide" >
         </activity>
     </application>
 
