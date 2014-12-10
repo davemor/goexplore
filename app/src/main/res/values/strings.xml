@@ -13,6 +13,6 @@
     <string name="title_routes_list_tab">List View</string>
     <string name="title_routes_map_tab">Map View</string>
     <string name="title_activity_route_detail">RouteDetailActivity</string>
-    <string name="route_detail_accessibility_label">Accessibility</string>
+    <string name="route_detail_surface_label">Surface</string>
 
 </resources>

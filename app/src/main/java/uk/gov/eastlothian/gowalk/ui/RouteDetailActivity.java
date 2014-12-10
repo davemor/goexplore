@@ -86,6 +86,7 @@ public class RouteDetailActivity extends FragmentActivity {
         TextView areaDescriptionView;
         TextView routeLengthView;
         TextView routeNumberView;
+        TextView routeSurface;
         GoogleMap mMap;
 
         long routeId;
@@ -117,6 +118,7 @@ public class RouteDetailActivity extends FragmentActivity {
             areaDescriptionView = (TextView) rootView.findViewById(R.id.route_detail_area_description);
             routeLengthView = (TextView) rootView.findViewById(R.id.route_detail_length);
             routeNumberView = (TextView) rootView.findViewById(R.id.route_detail_route_num);
+            routeSurface = (TextView) rootView.findViewById(R.id.route_detail_surface_text);
             mMap = ((SupportMapFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.route_detail_mapview)).getMap();
 
             // set up a query to get the route information
@@ -209,6 +211,9 @@ public class RouteDetailActivity extends FragmentActivity {
                 polylineOptions.color(color);
                 mMap.addPolyline(polylineOptions);
             }
+
+            // bind accessibility
+            routeSurface.setText(route.getSurface());
         }
     }
 }

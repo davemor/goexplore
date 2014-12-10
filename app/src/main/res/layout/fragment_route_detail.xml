@@ -88,10 +88,20 @@
             class="com.google.android.gms.maps.SupportMapFragment" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="@string/route_detail_accessibility_label"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/route_detail_surface_label"
+            android:id="@+id/route_detail_accessibility_label"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Surface"
+            android:id="@+id/route_detail_surface_text"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 
