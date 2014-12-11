@@ -76,7 +76,7 @@ public class RouteDetailActivity extends FragmentActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class RouteDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+    public static class RouteDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
         static final int AREA_QUERY_ID = 0;
         static final int ROUTE_QUERY_ID = 1;
