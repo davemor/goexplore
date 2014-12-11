@@ -180,7 +180,10 @@ public class WildlifeGuideActivity extends FragmentActivity {
         }
 
         private int getIdFromImageName(String name) {
-            return mContext.getResources().getIdentifier(name , "drawable", mContext.getPackageName());
+            String [] parts = name.split("\\.");
+            String packageName = mContext.getPackageName();
+            int rtnId = mContext.getResources().getIdentifier(parts[0], "drawable", packageName);
+            return rtnId;
         }
     }
 }

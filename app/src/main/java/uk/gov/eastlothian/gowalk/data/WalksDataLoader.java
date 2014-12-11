@@ -171,6 +171,8 @@ public class WalksDataLoader {
                     // images are optional
                     if (rowData.length > 6) {
                         imageFile = rowData[6];
+                    } else {
+                        Log.d(LOG_TAG, "Cannot find image name for " + name);
                     }
 
                     // assign them to database table names
