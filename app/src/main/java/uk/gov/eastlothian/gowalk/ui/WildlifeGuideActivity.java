@@ -2,6 +2,7 @@ package uk.gov.eastlothian.gowalk.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -93,7 +94,11 @@ public class WildlifeGuideActivity extends FragmentActivity {
             gridView.setAdapter(mAdapter);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                    Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                    Wildlife w = (Wildlife) mAdapter.getItem(position);
+                    Intent wildlifeDetailIntent = new Intent(getActivity(), WildlifeDetail.class);
+                    wildlifeDetailIntent.putExtra("wildlife_id", w.getId());
+                    startActivity(wildlifeDetailIntent);
                 }
             });
 
@@ -123,7 +128,7 @@ public class WildlifeGuideActivity extends FragmentActivity {
         }
     }
 
-    public static class WildlifeGridAdapter extends BaseAdapter{
+    public static class WildlifeGridAdapter extends BaseAdapter {
 
         static class ViewHolder {
             TextView textView;
@@ -171,19 +176,12 @@ public class WildlifeGuideActivity extends FragmentActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
             Wildlife wl = wildlife.get(position);
-            holder.textView.setText(wl.getName());
-            int imageId = getIdFromImageName(wl.getImageName());
+            holder.textView.setText(wl.getCapitalisedName());
+            int imageId = wl.getImageResourceId(mContext);
             holder.imageView.setImageResource(imageId);
             holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(538, 400));
             return convertView;
-        }
-
-        private int getIdFromImageName(String name) {
-            String [] parts = name.split("\\.");
-            String packageName = mContext.getPackageName();
-            int rtnId = mContext.getResources().getIdentifier(parts[0], "drawable", packageName);
-            return rtnId;
         }
     }
 }

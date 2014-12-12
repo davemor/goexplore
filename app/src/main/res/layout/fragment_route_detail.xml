@@ -103,6 +103,22 @@
             android:id="@+id/route_detail_surface_text"
             android:layout_gravity="center_horizontal" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="What you might see"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:id="@+id/route_detail_wildlife_insert_point"
+            android:gravity="center"> </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

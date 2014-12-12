@@ -1,5 +1,6 @@
 package uk.gov.eastlothian.gowalk.model;
 
+import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
@@ -59,5 +60,16 @@ public class Wildlife extends BaseRecord {
 
     public long getId() {
         return id;
+    }
+
+    public int getImageResourceId(Context context) {
+        String [] parts = imageName.split("\\.");
+        String packageName = context.getPackageName();
+        int rtnId = context.getResources().getIdentifier(parts[0], "drawable", packageName);
+        return rtnId;
+    }
+
+    public String getCapitalisedName() {
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 }

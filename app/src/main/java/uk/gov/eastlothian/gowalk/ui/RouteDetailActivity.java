@@ -1,10 +1,12 @@
 package uk.gov.eastlothian.gowalk.ui;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -30,6 +33,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksContract;
@@ -88,6 +92,9 @@ public class RouteDetailActivity extends FragmentActivity {
         TextView routeNumberView;
         TextView routeSurface;
         GoogleMap mMap;
+        ViewGroup wildlifeInsertPoint;
+
+        LayoutInflater mInflater;
 
         long routeId;
         long areaId;
@@ -101,6 +108,7 @@ public class RouteDetailActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            mInflater = inflater;
             View rootView = inflater.inflate(R.layout.fragment_route_detail, container, false);
 
             // get the area id and the route id
@@ -120,6 +128,7 @@ public class RouteDetailActivity extends FragmentActivity {
             routeNumberView = (TextView) rootView.findViewById(R.id.route_detail_route_num);
             routeSurface = (TextView) rootView.findViewById(R.id.route_detail_surface_text);
             mMap = ((SupportMapFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.route_detail_mapview)).getMap();
+            wildlifeInsertPoint = (ViewGroup) rootView.findViewById(R.id.route_detail_wildlife_insert_point);
 
             // set up a query to get the route information
             getLoaderManager().initLoader(AREA_QUERY_ID, null, this);
@@ -167,6 +176,7 @@ public class RouteDetailActivity extends FragmentActivity {
                     break;
                 case WILDLIFE_QUERY_ID:
                     wildlife = Wildlife.fromCursor(data);
+                    bindWildlife();
                     break;
             }
         }
@@ -214,6 +224,27 @@ public class RouteDetailActivity extends FragmentActivity {
 
             // bind accessibility
             routeSurface.setText(route.getSurface());
+        }
+
+        void bindWildlife() {
+            for (Wildlife wl : wildlife) {
+                final long wildlifeId = wl.getId();
+                View view = mInflater.inflate(R.layout.route_detail_wildlife_image, null);
+                view.setPadding(8, 8, 8, 8);
+                ImageView imageView = (ImageView) view.findViewById(R.id.route_detail_wildlife_image_view);
+                imageView.setImageResource(wl.getImageResourceId(getActivity()));
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), WildlifeDetail.class);
+                        intent.putExtra("wildlife_id", wildlifeId);
+                        startActivity(intent);
+
+                    }
+                });
+                wildlifeInsertPoint.addView(view);
+
+            }
         }
     }
 }

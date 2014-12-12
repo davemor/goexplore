@@ -60,6 +60,10 @@
             android:name=".ui.WildlifeGuideActivity"
             android:label="@string/title_activity_wildlife_guide" >
         </activity>
+        <activity
+            android:name=".ui.WildlifeDetail"
+            android:label="@string/title_activity_wildlife_detail" >
+        </activity>
     </application>
 
 </manifest>

@@ -4,6 +4,8 @@
     <color name="white">#ffffff</color>
     <color name="purple">#9424ac</color>
 
+    <color name="footer_background">#E3E2E0</color>
+
     <array name="route_colors">
         <item>#9424ac</item>
         <item>#0da397</item>
