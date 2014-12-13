@@ -201,7 +201,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
 
             // filter out the undrawable characters from the route descriptions
             TextView lengthView = (TextView) view.findViewById(R.id.routes_list_child_length);
-            String lengthText = lengthView.getText().toString() + " meters";
+            String lengthText = lengthView.getText().toString() + "m";
             lengthView.setText(lengthText);
 
             // insert the id of the child into a map at this position
