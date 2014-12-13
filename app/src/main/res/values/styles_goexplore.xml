@@ -23,7 +23,7 @@
         <item name="android:windowContentOverlay">@null</item>
 
         <item name="android:actionBarItemBackground">@drawable/selectable_background_goexplore</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu.Goexplore</item>
+        <!-- <item name="android:popupMenuStyle">@style/PopupMenu.Goexplore</item> -->
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Goexplore</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Goexplore</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav.Goexplore</item>
