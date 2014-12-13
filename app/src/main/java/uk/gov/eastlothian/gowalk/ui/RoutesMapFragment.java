@@ -51,6 +51,7 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
             WalksContract.RouteEntry.COLUMN_ROUTE_NUMBER,
             WalksContract.RouteEntry.COLUMN_COORDINATES,
             WalksContract.RouteEntry.COLUMN_DESCRIPTION,
+            WalksContract.RouteEntry.COLUMN_PRIMARY_AREA,
             WalksContract.RouteEntry.COLUMN_LENGTH
     };
     public static final int ROUTE_ID = 0;
@@ -108,6 +109,9 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
         List<Route> routes = Route.fromCursor(cursor);
         for (Route route : routes) {
             PolylineOptions lineOptions = new PolylineOptions();
+            long primaryAreaId = route.getPrimaryAreaId();
+            int color = AreaColors.getAreaColor(getActivity(), primaryAreaId);
+            lineOptions.color(color);
             lineOptions.addAll(route.getCoordinates());
             mMap.addPolyline(lineOptions);
         }

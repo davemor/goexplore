@@ -30,7 +30,11 @@ public class AreaColors {
 
     public static int getAreaColor(Context context, long id) {
         setup(context);
-        int[] colors = AreaColors.getColors();
-        return colors[(int)id%colors.length];
+        if (id > 0) {
+            int[] colors = AreaColors.getColors();
+            return colors[(int) id % colors.length];
+        } else {
+            return colors[0];
+        }
     }
 }

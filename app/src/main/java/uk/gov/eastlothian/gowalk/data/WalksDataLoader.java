@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import uk.gov.eastlothian.gowalk.model.Wildlife;
+
 /**
  * This class can be used to load the various part of the data model
  * into the database.
@@ -108,8 +110,7 @@ public class WalksDataLoader {
                 values.put(WalksContract.RouteEntry.COLUMN_LENGTH, length);
                 values.put(WalksContract.RouteEntry.COLUMN_SURFACE, surface);
                 values.put(WalksContract.RouteEntry.COLUMN_DESCRIPTION, description);
-
-                Log.d(LOG_TAG, "idx: " + idx);
+                values.put(WalksContract.RouteEntry.COLUMN_PRIMARY_AREA, -1);
 
                 valuesList.add(values);
             }
@@ -282,6 +283,10 @@ public class WalksDataLoader {
                     areaInRouteValues[idx] = new ContentValues();
                     areaInRouteValues[idx].put(WalksContract.RouteInAreaEntry.COLUMN_ROUTE_KEY, routeId);
                     areaInRouteValues[idx].put(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY, areaId);
+
+                    // update routes primary area to be this area
+                    setRoutePrimaryArea(context, routeId, areaId);
+
                     ++idx;
                 }
 /*
@@ -324,5 +329,20 @@ public class WalksDataLoader {
         for(Map.Entry<String, Object> pair : values.valueSet()) {
             Log.d(LOG_TAG, pair.getKey() + " : " + pair.getValue());
         }
+    }
+
+    private static void setRoutePrimaryArea(Context context, long routeId, long areaId) {
+        ContentValues vals = new ContentValues();
+        vals.put(WalksContract.RouteEntry.COLUMN_PRIMARY_AREA, areaId);
+
+        String selection = WalksContract.RouteEntry._ID + " = ?";
+        String [] args = { "" + routeId };
+
+        context.getContentResolver().update(
+                WalksContract.RouteEntry.CONTENT_URI,
+                vals,
+                selection,
+                args
+        );
     }
 }

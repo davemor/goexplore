@@ -211,6 +211,7 @@ public class WalksProvider extends ContentProvider {
                     "route.length, " +
                     "route.surface, " +
                     "route.description, " +
+                    "route.primary_area, " +
                     "route_in_area.area_id " +
                     "FROM route " +
                     "INNER JOIN route_in_area " +

@@ -52,6 +52,7 @@ public class WalksContract {
         public static final String COLUMN_LENGTH = "length";
         public static final String COLUMN_SURFACE = "surface";
         public static final String COLUMN_DESCRIPTION = "description";
+        public static final String COLUMN_PRIMARY_AREA = "primary_area";
 
         // query uris builder helpers
         public static Uri buildRouteUri(long id) {

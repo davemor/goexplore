@@ -42,7 +42,8 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             WalksContract.RouteEntry._ID,
             WalksContract.RouteEntry.COLUMN_ROUTE_NUMBER,
             WalksContract.RouteEntry.COLUMN_DESCRIPTION,
-            WalksContract.RouteEntry.COLUMN_LENGTH
+            WalksContract.RouteEntry.COLUMN_LENGTH,
+            WalksContract.RouteEntry.COLUMN_PRIMARY_AREA
     };
 
     // adapter for the list view
@@ -199,9 +200,9 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             shape.setStroke(3, AreaColors.getAreaColor(mActivity, areaId));
 
             // filter out the undrawable characters from the route descriptions
-            TextView descView = (TextView) view.findViewById(R.id.routes_list_child_description);
-            String description = descView.getText().toString();
-            Log.d("bla", description);
+            TextView lengthView = (TextView) view.findViewById(R.id.routes_list_child_length);
+            String lengthText = lengthView.getText().toString() + " meters";
+            lengthView.setText(lengthText);
 
             // insert the id of the child into a map at this position
             int childPos = cursor.getPosition();

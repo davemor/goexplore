@@ -26,15 +26,18 @@ public class Route extends BaseRecord {
     private int length;
     private String surface;
     private String description;
+    private long primaryAreaId;
 
     public Route(long id, int routeNumber, String coordinates,
-                 int length, String surface, String description) {
+                 int length, String surface, String description,
+                 long primaryAreaId) {
         this.id = id;
         this.routeNumber = routeNumber;
         this.coordinates = convertCoordinates(coordinates);
         this.length = length;
         this.surface = surface;
         this.description = description;
+        this.primaryAreaId = primaryAreaId;
     }
 
     private Route(Cursor cursor) {
@@ -44,6 +47,7 @@ public class Route extends BaseRecord {
         this.length = getInt(cursor, RouteEntry.COLUMN_LENGTH, 0);
         this.surface = getString(cursor, RouteEntry.COLUMN_SURFACE, "Unknown");
         this.description = getString(cursor, RouteEntry.COLUMN_DESCRIPTION, "");
+        this.primaryAreaId = getLong(cursor, RouteEntry.COLUMN_PRIMARY_AREA, 0); // defaults to nothing
     }
 
     /*
@@ -83,6 +87,8 @@ public class Route extends BaseRecord {
     public String getDescription() {
         return description;
     }
+
+    public long getPrimaryAreaId() { return primaryAreaId; }
 
     // helper functions
     public LatLng centrePoint() {
