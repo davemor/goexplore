@@ -194,7 +194,7 @@ public class RouteDetailActivity extends FragmentActivity {
             // header
             routeNumberView.setText("" + route.getRouteNumber());
             routeDescriptionView.setText(route.getDescription());
-            routeLengthView.setText("" + route.getLength());
+            routeLengthView.setText("" + route.getLength() + "m");
 
             // map
             if (mMap != null) {
