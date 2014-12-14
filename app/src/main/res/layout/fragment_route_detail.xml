@@ -90,8 +90,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_vertical_margin"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/route_detail_surface_label"
+            android:textStyle="bold"
             android:id="@+id/route_detail_accessibility_label"
             android:layout_gravity="center_horizontal" />
 
@@ -107,14 +109,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:textStyle="bold"
             android:text="What you might see"
-            android:id="@+id/textView2"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
             android:orientation="horizontal"
             android:id="@+id/route_detail_wildlife_insert_point"
             android:gravity="center"> </LinearLayout>
