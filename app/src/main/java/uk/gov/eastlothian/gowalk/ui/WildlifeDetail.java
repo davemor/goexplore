@@ -2,6 +2,8 @@ package uk.gov.eastlothian.gowalk.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -158,8 +160,17 @@ public class WildlifeDetail extends FragmentActivity {
 
         private void addRouteView(Route route) {
             final long routeId = route.getId();
+            final long primaryAreaId = route.getPrimaryAreaId();
             View view =  mInflator.inflate(R.layout.wildlife_detail_route_circle, null);
             view.setPadding(8,8,8,8);
+
+            // set circle background colour
+            View circleView = view.findViewById(R.id.wildlife_detail_circle);
+            int color = AreaColors.getAreaColor(getActivity(), route.getPrimaryAreaId());
+            GradientDrawable drawable = (GradientDrawable) circleView.getBackground();
+            drawable.setColor(color);
+            drawable.setStroke(3, color); // TODO: define a global stroke value
+
             TextView routeNumberText = (TextView) view.findViewById(R.id.wildlife_detail_route_number);
             routeNumberText.setText("" + route.getRouteNumber());
             view.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +179,7 @@ public class WildlifeDetail extends FragmentActivity {
                     // TODO: for out the correct area id
                     Intent intent = new Intent(getActivity(), RouteDetailActivity.class);
                     intent.putExtra("route_id", routeId);
-                    intent.putExtra("area_id", (long) 1);
+                    intent.putExtra("area_id", primaryAreaId);
                     startActivity(intent);
 
                 }
