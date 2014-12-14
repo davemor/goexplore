@@ -9,7 +9,7 @@
     <string name="button_start_wildlife">Wildlife Guide</string>
     <string name="button_start_logbook">Your Log Book</string>
     <string name="button_start_about">About this app</string>
-    <string name="title_activity_paths_list">PathsListActivity</string>
+    <string name="title_activity_paths_list">Core Paths in East Lothian</string>
     <string name="title_routes_list_tab">List View</string>
     <string name="title_routes_map_tab">Map View</string>
     <string name="title_activity_route_detail">RouteDetailActivity</string>

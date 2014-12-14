@@ -1,6 +1,7 @@
 package uk.gov.eastlothian.gowalk.ui;
 
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
@@ -200,6 +201,8 @@ public class RouteDetailActivity extends FragmentActivity {
             routeNumberView.setText("" + route.getRouteNumber());
             routeDescriptionView.setText(route.getDescription());
             routeLengthView.setText("" + route.getLength() + "m");
+
+            getActivity().getActionBar().setTitle("Route Number " + route.getRouteNumber());
 
             // map
             if (mMap != null) {

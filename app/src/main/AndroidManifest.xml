@@ -38,7 +38,6 @@
             android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -54,7 +53,13 @@
         </activity>
         <activity
             android:name=".ui.RouteDetailActivity"
-            android:label="@string/title_activity_route_detail" >
+            android:label="@string/title_activity_route_detail"
+            android:parentActivityName=".ui.RoutesActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.gov.eastlothian.gowalk.ui.RoutesActivity" />
         </activity>
         <activity
             android:name=".ui.WildlifeGuideActivity"
