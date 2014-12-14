@@ -5,6 +5,7 @@
     <color name="purple">#9424ac</color>
 
     <color name="footer_background">#E3E2E0</color>
+    <color name="grey_background">#C6C6C6</color>
 
     <array name="route_colors">
         <item>#9424ac</item>
