@@ -91,6 +91,8 @@ public class RouteDetailActivity extends FragmentActivity {
         TextView routeLengthView;
         TextView routeNumberView;
         TextView routeSurface;
+        TextView surfaceLabel;
+        TextView wildlifeLabel;
         GoogleMap mMap;
         ViewGroup wildlifeInsertPoint;
 
@@ -129,6 +131,9 @@ public class RouteDetailActivity extends FragmentActivity {
             routeSurface = (TextView) rootView.findViewById(R.id.route_detail_surface_text);
             mMap = ((SupportMapFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.route_detail_mapview)).getMap();
             wildlifeInsertPoint = (ViewGroup) rootView.findViewById(R.id.route_detail_wildlife_insert_point);
+
+            surfaceLabel = (TextView) rootView.findViewById(R.id.route_detail_accessibility_label);
+            wildlifeLabel = (TextView) rootView.findViewById(R.id.route_detail_wildlife_label);
 
             // set up a query to get the route information
             getLoaderManager().initLoader(AREA_QUERY_ID, null, this);
@@ -227,23 +232,26 @@ public class RouteDetailActivity extends FragmentActivity {
         }
 
         void bindWildlife() {
-            for (Wildlife wl : wildlife) {
-                final long wildlifeId = wl.getId();
-                View view = mInflater.inflate(R.layout.route_detail_wildlife_image, null);
-                view.setPadding(8, 8, 8, 8);
-                ImageView imageView = (ImageView) view.findViewById(R.id.route_detail_wildlife_image_view);
-                imageView.setImageResource(wl.getImageResourceId(getActivity()));
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), WildlifeDetail.class);
-                        intent.putExtra("wildlife_id", wildlifeId);
-                        startActivity(intent);
+            if (wildlife.isEmpty()) {
+                wildlifeLabel.setText("");
+            } else {
+                for (Wildlife wl : wildlife) {
+                    final long wildlifeId = wl.getId();
+                    View view = mInflater.inflate(R.layout.route_detail_wildlife_image, null);
+                    view.setPadding(8, 8, 8, 8);
+                    ImageView imageView = (ImageView) view.findViewById(R.id.route_detail_wildlife_image_view);
+                    imageView.setImageResource(wl.getImageResourceId(getActivity()));
+                    imageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), WildlifeDetail.class);
+                            intent.putExtra("wildlife_id", wildlifeId);
+                            startActivity(intent);
 
-                    }
-                });
-                wildlifeInsertPoint.addView(view);
-
+                        }
+                    });
+                    wildlifeInsertPoint.addView(view);
+                }
             }
         }
     }

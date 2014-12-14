@@ -2,6 +2,7 @@ package uk.gov.eastlothian.gowalk.model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ import uk.gov.eastlothian.gowalk.data.WalksContract.WildlifeEntry;
  * Created by davidmorrison on 10/12/14.
  */
 public class Wildlife extends BaseRecord {
+
+    private static String LOG_TAG = Wildlife.class.getSimpleName();
 
     private long id;
     private String name;
@@ -66,6 +69,9 @@ public class Wildlife extends BaseRecord {
         String [] parts = imageName.split("\\.");
         String packageName = context.getPackageName();
         int rtnId = context.getResources().getIdentifier(parts[0], "drawable", packageName);
+        if (rtnId == 0) {
+            Log.d(LOG_TAG, "Unable to find resource " + parts[0] + ".");
+        }
         return rtnId;
     }
 
