@@ -137,6 +137,7 @@ public class WildlifeDetail extends FragmentActivity {
                         int imageId = w.getImageResourceId(getActivity());
                         imageView.setImageResource(imageId);
                         descriptionView.setText(w.getDescription());
+                        getActivity().getActionBar().setTitle(w.getCapitalisedName());
                     } else {
                         Log.d(LOG_TAG, "Error loading wildlife.");
                     }
