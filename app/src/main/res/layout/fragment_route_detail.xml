@@ -128,7 +128,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:id="@+id/route_detail_wildlife_insert_point"
                 android:gravity="center"> </LinearLayout>
 

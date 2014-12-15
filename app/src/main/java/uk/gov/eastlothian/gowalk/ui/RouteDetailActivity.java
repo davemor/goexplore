@@ -15,12 +15,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.w3c.dom.Text;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -240,24 +243,41 @@ public class RouteDetailActivity extends FragmentActivity {
             if (wildlife.isEmpty()) {
                 wildlifeLabel.setText("");
             } else {
+                LinearLayout rowLayout = null;
+                int idx = 0;
                 for (Wildlife wl : wildlife) {
-                    final long wildlifeId = wl.getId();
-                    View view = mInflater.inflate(R.layout.route_detail_wildlife_image, null);
-                    view.setPadding(8, 8, 8, 8);
-                    ImageView imageView = (ImageView) view.findViewById(R.id.route_detail_wildlife_image_view);
-                    imageView.setImageResource(wl.getImageResourceId(getActivity()));
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(getActivity(), WildlifeDetail.class);
-                            intent.putExtra("wildlife_id", wildlifeId);
-                            startActivity(intent);
-
+                    if (idx % 3 == 0) {
+                        if (rowLayout != null) {
+                            wildlifeInsertPoint.addView(rowLayout);
                         }
-                    });
-                    wildlifeInsertPoint.addView(view);
+                        rowLayout = new LinearLayout(getActivity());
+                        rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+                        rowLayout.setGravity(Gravity.CENTER);
+                        // rowLayout.setBackgroundColor(getResources().getColor(R.color.purple));
+                    }
+                    View wildlifeView = makeWildlifeView(wl);
+                    rowLayout.addView(wildlifeView);
+                    ++idx;
                 }
             }
+        }
+
+        View makeWildlifeView(Wildlife wl) {
+            final long wildlifeId = wl.getId();
+            View view = mInflater.inflate(R.layout.route_detail_wildlife_image, null);
+            view.setPadding(8, 8, 8, 8);
+            ImageView imageView = (ImageView) view.findViewById(R.id.route_detail_wildlife_image_view);
+            imageView.setImageResource(wl.getImageResourceId(getActivity()));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), WildlifeDetail.class);
+                    intent.putExtra("wildlife_id", wildlifeId);
+                    startActivity(intent);
+
+                }
+            });
+            return view;
         }
     }
 }
