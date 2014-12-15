@@ -5,6 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Goexplore</item>
+
     </style>
 
     <style name="start_activity_button" parent="@android:style/Widget.Button">
