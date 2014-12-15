@@ -63,11 +63,19 @@
         </activity>
         <activity
             android:name=".ui.WildlifeGuideActivity"
-            android:label="@string/title_activity_wildlife_guide" >
+            android:label="@string/title_activity_wildlife_guide"
+            android:parentActivityName=".ui.StartActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.gov.eastlothian.gowalk.ui.StartActivity" />
         </activity>
         <activity
             android:name=".ui.WildlifeDetail"
-            android:label="@string/title_activity_wildlife_detail" >
+            android:label="@string/title_activity_wildlife_detail"
+            android:parentActivityName=".ui.WildlifeGuideActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.gov.eastlothian.gowalk.ui.WildlifeGuideActivity" />
         </activity>
     </application>
 
