@@ -31,7 +31,7 @@ public class RoutesActivity extends FragmentActivity implements ActionBar.TabLis
         // set up the action bar so it shows the tabs
         ActionBar bar = getActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        bar.setDisplayShowTitleEnabled(false);
+        // bar.setDisplayShowTitleEnabled(false);
         ActionBar.Tab areasTab = getActionBar().newTab()
                 .setText(R.string.title_routes_list_tab)
                 .setTabListener(this);

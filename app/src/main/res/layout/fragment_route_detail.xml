@@ -7,18 +7,21 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!--
         <View
             android:id="@+id/route_detail_background_rect"
             android:layout_width="fill_parent"
-            android:layout_height="100dp"
+            android:layout_height="fill_parent"
             android:background="@drawable/rectangle"/>
+        -->
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/route_detail_linear_layout"
             android:orientation="vertical">
 
             <LinearLayout
@@ -52,7 +55,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin">
 
                     <TextView
@@ -76,6 +79,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/activity_vertical_margin_small"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="italic"
                         android:text="1658m"

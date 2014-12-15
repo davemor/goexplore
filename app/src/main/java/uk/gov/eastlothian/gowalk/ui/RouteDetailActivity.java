@@ -120,8 +120,10 @@ public class RouteDetailActivity extends FragmentActivity {
 
             // set the background color of the header to the area color
             final ColorDrawable areaColor = new ColorDrawable(AreaColors.getAreaColor(getActivity(), areaId));
-            View headerBG = rootView.findViewById(R.id.route_detail_background_rect);
-            headerBG.setBackground(areaColor);
+            //View headerBG = rootView.findViewById(R.id.route_detail_background_rect);
+            //headerBG.setBackground(areaColor);
+            View header = rootView.findViewById(R.id.route_detail_header);
+            header.setBackground(areaColor);
             getActivity().getActionBar().setBackgroundDrawable(areaColor.getConstantState().newDrawable());
 
             // bind the parts of the header we want to update
