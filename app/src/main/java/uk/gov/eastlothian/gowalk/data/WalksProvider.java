@@ -142,7 +142,8 @@ public class WalksProvider extends ContentProvider {
             case WILDLIFE_FOR_ROUTE: {
                 String [] subs = new String [] { WalksContract.RouteEntry.getRouteFromUri(uri) };
                 // TODO: refactor the query to use the WalksContract
-                String query = "SELECT wildlife._ID, wildlife.name, " +
+                String query = "SELECT wildlife._ID, " +
+                    "wildlife.name, " +
                     "wildlife.category, " +
                     "wildlife.description, " +
                     "wildlife.image_name, " +
@@ -150,7 +151,7 @@ public class WalksProvider extends ContentProvider {
                     "FROM wildlife " +
                     "INNER JOIN wildlife_on_route " +
                     "ON wildlife._ID " +
-                    "= wildlife_on_route._ID " +
+                    "= wildlife_on_route.wildlife_id " +
                     "WHERE wildlife_on_route.route_id = ?;";
 
                 /*
