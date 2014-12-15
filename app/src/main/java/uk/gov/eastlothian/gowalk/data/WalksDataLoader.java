@@ -47,7 +47,7 @@ public class WalksDataLoader {
         AssetManager asserts = context.getAssets();
         Map<Integer, String> descriptions = loadRouteDescriptionsFromCSV(asserts.open("Routes.csv"));
         insertRoutesIntoWalksDatabase(asserts.open("core_paths.json"), descriptions, context);
-        WalksDataLoader.loadWildlifeDbFromCSV(asserts.open("Wildlife.csv"), context);
+        WalksDataLoader.loadWildlifeDbFromCSV(asserts.open("Wildlife.csv"), asserts.open("wildlife_descriptions.json"), context);
         loadRoutesInAreas(asserts.open("RoutesInAreas.csv"), context);
     }
 
@@ -151,12 +151,32 @@ public class WalksDataLoader {
         return rtnMap;
     }
 
-    private static void loadWildlifeDbFromCSV(InputStream inStream, Context context) {
+    private static void loadWildlifeDbFromCSV(InputStream inStream, InputStream jsonStream, Context context) {
+        // load the descriptions json file
+        JSONArray descArray = null;
+        BufferedReader jreader = new BufferedReader(new InputStreamReader(jsonStream));
+        StringBuilder builder = new StringBuilder();
+        String aux = "";
+        try {
+            while ((aux = jreader.readLine()) != null) {
+                builder.append(aux);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String descJsonStr = builder.toString();
+        try {
+            descArray = new JSONArray(descJsonStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
         try {
             reader.readLine();
             reader.readLine();
             String line;
+            int idx = 0;
             while((line = reader.readLine()) != null) {
                 String[] rowData = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
@@ -164,7 +184,7 @@ public class WalksDataLoader {
                     // get the values out of the row
                     String name = rowData[1];
                     String category = rowData[2];
-                    String description = rowData[3];
+                    String description = descArray.optString(idx, rowData[3]);
                     String foundOnRoutes = rowData[4];
                     String whenSeen = rowData[5];
                     String imageFile = "no_image";
@@ -209,8 +229,8 @@ public class WalksDataLoader {
                                     null);
                             if (cursor.moveToFirst()) {
                                 ContentValues rowValues = new ContentValues();
-                                int idx = cursor.getColumnIndex(WalksContract.RouteEntry._ID);
-                                long routeId = cursor.getLong(idx);
+                                int index = cursor.getColumnIndex(WalksContract.RouteEntry._ID);
+                                long routeId = cursor.getLong(index);
                                 rowValues.put(WalksContract.WildlifeOnRouteEntry.COLUMN_ROUTE_KEY, routeId);
                                 rowValues.put(WalksContract.WildlifeOnRouteEntry.COLUMN_WILDLIFE_KEY, wildlifeId);
                                 wildlifeOnRouteValues.add(rowValues);
@@ -229,6 +249,7 @@ public class WalksDataLoader {
                 } else {
                     Log.d(LOG_TAG, "Skipping line that does not have enough data.");
                 }
+                ++idx;
             }
         } catch (IOException ex) {
             Log.d(LOG_TAG, "Error while loading the wildlife.", ex);

@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -240,9 +241,8 @@ public class RouteDetailActivity extends FragmentActivity {
         }
 
         void bindWildlife() {
-            if (wildlife.isEmpty()) {
-                wildlifeLabel.setText("");
-            } else {
+            if (!wildlife.isEmpty()) {
+                wildlifeLabel.setText("What you might see");
                 LinearLayout rowLayout = null;
                 int idx = 0;
                 for (Wildlife wl : wildlife) {
@@ -259,6 +259,7 @@ public class RouteDetailActivity extends FragmentActivity {
                     rowLayout.addView(wildlifeView);
                     ++idx;
                 }
+                wildlifeInsertPoint.addView(rowLayout);
             }
         }
 

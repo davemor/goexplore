@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -136,7 +137,7 @@ public class WildlifeDetail extends FragmentActivity {
                         Wildlife w = wildlife.get(0);
                         int imageId = w.getImageResourceId(getActivity());
                         imageView.setImageResource(imageId);
-                        descriptionView.setText(w.getDescription());
+                        descriptionView.setText(Html.fromHtml(w.getDescription()));
                         getActivity().getActionBar().setTitle(w.getCapitalisedName());
                     } else {
                         Log.d(LOG_TAG, "Error loading wildlife.");
