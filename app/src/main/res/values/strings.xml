@@ -16,5 +16,6 @@
     <string name="route_detail_surface_label">Surface</string>
     <string name="title_activity_wildlife_guide">Wildlife in East Lothian</string>
     <string name="title_activity_wildlife_detail">WildlifeDetail</string>
+    <string name="title_activity_log_book">LogBookActivity</string>
 
 </resources>

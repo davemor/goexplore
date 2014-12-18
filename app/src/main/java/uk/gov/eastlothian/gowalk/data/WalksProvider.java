@@ -30,8 +30,10 @@ public class WalksProvider extends ContentProvider {
     private static final int WILDLIFE_ON_ROUTE_ID = 501;    // single row of wildlife_on_route from id
     private static final int WILDLIFE_FOR_ROUTE = 502;      // list of wildlife on a specific route
     private static final int ROUTES_FOR_WILDLIFE = 503;     // list of the routes that specific wildlife is found on
+    private static final int LOG_ENTRIES_FOR_WILDLIFE = 504; // list of log entries for a specific wildlife
     private static final int LOG_ENTRY = 600;               // list of log entries
     private static final int LOG_ENTRY_ID = 601;            // single log entry base on id
+    private static final int WILDLIFE_THAT_HAVE_LOG_ENTRIES = 602; //
 
     private WalksDbHelper mOpenHelper;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -60,6 +62,7 @@ public class WalksProvider extends ContentProvider {
         matcher.addURI(authority, WalksContract.PATH_WILDLIFE, WILDLIFE);
         matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/#", WILDLIFE_ID);
         matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/#/route", ROUTES_FOR_WILDLIFE);
+        matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/#/wildlife", LOG_ENTRIES_FOR_WILDLIFE);
 
         // wildlife_on_route junction table
         matcher.addURI(authority, WalksContract.PATH_WILDLIFE_ON_ROUTE, WILDLIFE_ON_ROUTE);
@@ -299,6 +302,31 @@ public class WalksProvider extends ContentProvider {
                     null,
                     null,
                     sortOrder);
+                break;
+
+            case LOG_ENTRIES_FOR_WILDLIFE: {
+                long wildlifeId = ContentUris.parseId(uri);
+                rtnCursor = mOpenHelper.getReadableDatabase().query(
+                    WalksContract.LogEntry.TABLE_NAME,
+                    projection,
+                    WalksContract.LogEntry.COLUMN_WILDLIFE_KEY + " = '" + wildlifeId + "'",
+                    null,
+                    null,
+                    null,
+                    sortOrder);
+                }
+                break;
+
+            case WILDLIFE_THAT_HAVE_LOG_ENTRIES: {
+                String query = "SELECT wildlife._ID, " +
+                        "wildlife.name, " +
+                        "wildlife.image_name, " +
+                        "count(*) " +
+                        "FROM wildlife " +
+                        "INNER JOIN log_entry ON wildlife._ID = log_entry.wildlife_id " +
+                        "GROUP BY wildlife._ID;";
+                rtnCursor = mOpenHelper.getReadableDatabase().rawQuery(query, null);
+                }
                 break;
             case LOG_ENTRY:
                 rtnCursor = mOpenHelper.getReadableDatabase().query(
