@@ -34,7 +34,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="You are logging a"
-        android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
@@ -46,10 +45,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="42sp"
         android:text="Red Fox"
-        android:id="@+id/textView2"
+        android:id="@+id/new_log_name"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Location of sighting"
+        android:text="Add location of sighting"
         android:id="@+id/new_log_location_of_sighting_button"
         android:layout_below="@+id/new_log_location_label"
         android:layout_alignParentLeft="true"

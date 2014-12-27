@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -63,19 +64,14 @@ public class WildlifeDetail extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onLogSightingButtonClicked(View view) {
-        long wildlifeId = getIntent().getLongExtra("wildlife_id", -1);
-        Intent intent = new Intent(this, NewLogEntryActivity.class);
-        intent.putExtra("wildlife_id", wildlifeId);
-        startActivity(intent);
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */
     public static class WildlifeDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
         private final String LOG_TAG = WildlifeDetailFragment.class.getSimpleName();
+
+        Wildlife wildlife;
 
         static final int WILDLIFE_QUERY_ID = 0;
         static final int ROUTES_FOR_WILDLIFE_QUERY_ID = 1;
@@ -110,7 +106,23 @@ public class WildlifeDetail extends FragmentActivity {
             getLoaderManager().initLoader(WILDLIFE_QUERY_ID, null, this);
             getLoaderManager().initLoader(ROUTES_FOR_WILDLIFE_QUERY_ID, null, this);
 
+            Button logButton = (Button) rootView.findViewById(R.id.wildlife_detail_log_sighting_button);
+            logButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onLogSightingButtonClicked(view);
+                }
+            });
+
             return rootView;
+        }
+
+        public void onLogSightingButtonClicked(View view) {
+            Intent intent = new Intent(getActivity(), NewLogEntryActivity.class);
+            intent.putExtra("wildlife_id", wildlife.getId());
+            intent.putExtra("wildlife_name", wildlife.getCapitalisedName());
+            intent.putExtra("wildlife_image_res_id", wildlife.getImageResourceId(getActivity()));
+            startActivity(intent);
         }
 
         @Override
@@ -136,13 +148,13 @@ public class WildlifeDetail extends FragmentActivity {
             switch (loader.getId()) {
                 case WILDLIFE_QUERY_ID: {
                     // update the view of the wildlife
-                    List<Wildlife> wildlife = Wildlife.fromCursor(data);
-                    if (wildlife.size() == 1) {
-                        Wildlife w = wildlife.get(0);
-                        int imageId = w.getImageResourceId(getActivity());
+                    List<Wildlife> wildlifeList = Wildlife.fromCursor(data);
+                    if (wildlifeList.size() == 1) {
+                        wildlife = wildlifeList.get(0);
+                        int imageId = wildlife.getImageResourceId(getActivity());
                         imageView.setImageResource(imageId);
-                        descriptionView.setText(Html.fromHtml(w.getDescription()));
-                        getActivity().getActionBar().setTitle(w.getCapitalisedName());
+                        descriptionView.setText(Html.fromHtml(wildlife.getDescription()));
+                        getActivity().getActionBar().setTitle(wildlife.getCapitalisedName());
                     } else {
                         Log.d(LOG_TAG, "Error loading wildlife.");
                     }

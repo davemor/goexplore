@@ -1,11 +1,10 @@
 package uk.gov.eastlothian.gowalk.ui;
 
-import android.app.Activity;
-import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,15 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import org.w3c.dom.Text;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
 
@@ -73,11 +72,13 @@ public class NewLogEntryActivity extends FragmentActivity {
     public static class NewLogEntryFragment extends Fragment {
 
         // view
+        Button locationButton;
         Button dateButton;
         Button timeButton;
         Spinner weatherSpinner;
 
         // data
+        LatLng location;
         int year, month, day; // date
         int hour, minute; // time
 
@@ -85,10 +86,46 @@ public class NewLogEntryActivity extends FragmentActivity {
         }
 
         @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            // Check which request we're responding to
+            if (requestCode == LocationPickerActivity.LOCATION_RESULT) {
+                // Make sure the request was successful
+                if (resultCode == RESULT_OK) {
+                    double lat = data.getDoubleExtra("lat", 0.0);
+                    double lng = data.getDoubleExtra("lng", 0.0);
+                    location = new LatLng(lat, lng);
+                    locationButton.setText("(" + lat + ", " + lng + ")");
+                }
+            }
+        }
+
+        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_new_log_entry, container, false);
 
+            // set the title and image to the correct value for this animal
+            String wildlifeName = getActivity().getIntent().getStringExtra("wildlife_name");
+            TextView nameView = (TextView) rootView.findViewById(R.id.new_log_name);
+            nameView.setText(wildlifeName);
+
+            int wildlifeImageId = getActivity().getIntent().getIntExtra("wildlife_image_res_id", -1);
+            if (wildlifeImageId != -1) {
+                ImageView imageView = (ImageView) rootView.findViewById(R.id.new_log_wildlife_image_view);
+                imageView.setImageResource(wildlifeImageId);
+            }
+
+            // set up pick location button
+            locationButton = (Button) rootView.findViewById(R.id.new_log_location_of_sighting_button);
+            locationButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), LocationPickerActivity.class);
+                    startActivityForResult(intent, LocationPickerActivity.LOCATION_RESULT);
+                }
+            });
+
+            // set up date button
             dateButton = (Button) rootView.findViewById(R.id.new_log_select_date_button);
             dateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -98,6 +135,7 @@ public class NewLogEntryActivity extends FragmentActivity {
             });
             setDateToToday();
 
+            // set up time button
             timeButton = (Button) rootView.findViewById(R.id.new_log_time_button);
             timeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
