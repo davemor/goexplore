@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="weather_array">
+        <item>Clear Sky</item>
+        <item>Sunny</item>
+        <item>Cloudy</item>
+        <item>Partly Cloudy</item>
+        <item>Rainy</item>
+        <item>Snowy</item>
+        <item>Sleeting</item>
+        <item>Stormy</item>
+        <item>Lightning</item>
+        <item>Thunder</item>
+        <item>Hailing</item>
+        <item>Windy</item>
+        <item>Foggy</item>
+        <item>Icy</item>
+    </string-array>
+</resources>

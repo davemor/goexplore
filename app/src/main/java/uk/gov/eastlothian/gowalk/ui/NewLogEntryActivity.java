@@ -16,8 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -73,6 +75,7 @@ public class NewLogEntryActivity extends FragmentActivity {
         // view
         Button dateButton;
         Button timeButton;
+        Spinner weatherSpinner;
 
         // data
         int year, month, day; // date
@@ -103,6 +106,13 @@ public class NewLogEntryActivity extends FragmentActivity {
                 }
             });
             setTimeToToday();
+
+            // set up weather spinner
+            weatherSpinner = (Spinner) rootView.findViewById(R.id.new_log_weather_spinner);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                    R.array.weather_array, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            weatherSpinner.setAdapter(adapter);
 
             return rootView;
         }
