@@ -21,6 +21,15 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Log a sighting"
+            android:id="@+id/logSightingButton"
+            android:background="@color/background_color"
+            android:textColor="@color/white"
+            android:onClick="onLogSightingButtonClicked"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -36,6 +36,7 @@
         android:id="@+id/button_start_logbook"
         android:layout_below="@+id/button_start_wildlife"
         android:layout_centerHorizontal="true"
+        android:onClick="onViewLogBookClicked"
         style="@style/start_activity_button" />
 
     <Button

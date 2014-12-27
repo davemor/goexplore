@@ -22,6 +22,7 @@ public class Wildlife extends BaseRecord {
     private String description;
     private String imageName;
     private String whenSeen;
+    private int numLogEntries;
 
     private Wildlife(Cursor cursor) {
         this.id = getLong(cursor, WildlifeEntry._ID, -1);
@@ -30,6 +31,7 @@ public class Wildlife extends BaseRecord {
         this.description = getString(cursor, WildlifeEntry.COLUMN_DESCRIPTION, "unknown description");
         this.imageName = getString(cursor, WildlifeEntry.COLUMN_IMAGE_NAME, "unknown image");
         this.whenSeen = getString(cursor, WildlifeEntry.COLUMN_WHEN_SEEN, "unknown when seen");
+        this.numLogEntries = getInt(cursor, "num_log_entries", 0);
     }
 
     public static List<Wildlife> fromCursor(Cursor cursor) {

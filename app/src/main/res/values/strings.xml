@@ -17,5 +17,6 @@
     <string name="title_activity_wildlife_guide">Wildlife in East Lothian</string>
     <string name="title_activity_wildlife_detail">WildlifeDetail</string>
     <string name="title_activity_log_book">LogBookActivity</string>
+    <string name="title_activity_new_log_entry">NewLogEntryActivity</string>
 
 </resources>

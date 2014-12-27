@@ -82,6 +82,10 @@
             android:name=".ui.LogBookActivity"
             android:label="@string/title_activity_log_book" >
         </activity>
+        <activity
+            android:name=".ui.NewLogEntryActivity"
+            android:label="@string/title_activity_new_log_entry" >
+        </activity>
     </application>
 
 </manifest>

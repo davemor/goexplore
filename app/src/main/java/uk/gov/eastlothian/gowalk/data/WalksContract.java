@@ -189,5 +189,8 @@ public class WalksContract {
         public static Uri buildLogEntrysUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+        public static Uri buildWildlifeLogsUri() {
+            return CONTENT_URI.buildUpon().appendPath("wildlife").build();
+        }
     }
 }

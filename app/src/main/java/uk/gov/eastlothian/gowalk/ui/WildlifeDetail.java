@@ -3,7 +3,6 @@ package uk.gov.eastlothian.gowalk.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.shapes.Shape;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,8 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +63,13 @@ public class WildlifeDetail extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onLogSightingButtonClicked(View view) {
+        long wildlifeId = getIntent().getLongExtra("wildlife_id", -1);
+        Intent intent = new Intent(this, NewLogEntryActivity.class);
+        intent.putExtra("wildlife_id", wildlifeId);
+        startActivity(intent);
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -78,7 +82,7 @@ public class WildlifeDetail extends FragmentActivity {
 
         long wildlifeId;
         List<Route> routes = new ArrayList<Route>();
-        LayoutInflater mInflator;
+        LayoutInflater inflater;
 
         // view parts
         ImageView imageView;
@@ -91,7 +95,7 @@ public class WildlifeDetail extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            mInflator = inflater;
+            this.inflater = inflater;
 
             View rootView = inflater.inflate(R.layout.fragment_wildlife_detail, container, false);
 
@@ -163,7 +167,7 @@ public class WildlifeDetail extends FragmentActivity {
         private void addRouteView(Route route) {
             final long routeId = route.getId();
             final long primaryAreaId = route.getPrimaryAreaId();
-            View view =  mInflator.inflate(R.layout.wildlife_detail_route_circle, null);
+            View view =  inflater.inflate(R.layout.wildlife_detail_route_circle, null);
             view.setPadding(8,8,8,8);
 
             // set circle background colour

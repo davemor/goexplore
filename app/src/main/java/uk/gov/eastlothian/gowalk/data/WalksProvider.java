@@ -71,6 +71,7 @@ public class WalksProvider extends ContentProvider {
         // log
         matcher.addURI(authority, WalksContract.PATH_LOG_ENTRY, LOG_ENTRY);
         matcher.addURI(authority, WalksContract.PATH_LOG_ENTRY + "/#", LOG_ENTRY_ID);
+        matcher.addURI(authority, WalksContract.PATH_LOG_ENTRY + "/wildlife", WILDLIFE_THAT_HAVE_LOG_ENTRIES);
 
         return matcher;
     }
@@ -321,7 +322,7 @@ public class WalksProvider extends ContentProvider {
                 String query = "SELECT wildlife._ID, " +
                         "wildlife.name, " +
                         "wildlife.image_name, " +
-                        "count(*) " +
+                        "count(*) AS num_log_entries " +
                         "FROM wildlife " +
                         "INNER JOIN log_entry ON wildlife._ID = log_entry.wildlife_id " +
                         "GROUP BY wildlife._ID;";
