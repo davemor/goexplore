@@ -121,6 +121,7 @@ public class WildlifeDetail extends FragmentActivity {
             Intent intent = new Intent(getActivity(), NewLogEntryActivity.class);
             intent.putExtra("wildlife_id", wildlife.getId());
             intent.putExtra("wildlife_name", wildlife.getCapitalisedName());
+            intent.putExtra("wildlife_image_name", wildlife.getImageName());
             intent.putExtra("wildlife_image_res_id", wildlife.getImageResourceId(getActivity()));
             startActivity(intent);
         }

@@ -153,7 +153,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Log this"
-        android:id="@+id/button"
+        android:id="@+id/new_log_button"
         android:background="@color/background_color"
         android:textColor="@color/white"
         android:layout_gravity="center_horizontal"

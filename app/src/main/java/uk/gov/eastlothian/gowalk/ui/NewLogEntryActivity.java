@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -24,9 +25,12 @@ import android.widget.TimePicker;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import uk.gov.eastlothian.gowalk.R;
+import uk.gov.eastlothian.gowalk.data.WalksContract;
 
 public class NewLogEntryActivity extends FragmentActivity {
 
@@ -77,8 +81,8 @@ public class NewLogEntryActivity extends FragmentActivity {
         Button timeButton;
         Spinner weatherSpinner;
 
-        // data
-        LatLng location;
+        // data // TODO: This might not be a good default location (current location)
+        LatLng location = new LatLng(55.9561054, -2.7770153);
         int year, month, day; // date
         int hour, minute; // time
 
@@ -152,7 +156,51 @@ public class NewLogEntryActivity extends FragmentActivity {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             weatherSpinner.setAdapter(adapter);
 
+            // set up the log this button
+            Button logButton = (Button) rootView.findViewById(R.id.new_log_button);
+            logButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // add the log to the database
+                    insertLogEntry();
+
+                    // go to the log book activity
+                    Intent intent = new Intent(getActivity(), LogBookActivity.class);
+                    startActivity(intent);
+                }
+            });
+
             return rootView;
+        }
+
+        // update the database
+        private void insertLogEntry() {
+            ContentValues values = new ContentValues();
+
+            // wildlife id
+            long wildlifeId = getActivity().getIntent().getLongExtra("wildlife_id", -1);
+            values.put(WalksContract.LogEntry.COLUMN_WILDLIFE_KEY, wildlifeId);
+
+            // date time
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day, hour, minute);
+            SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateTime = iso8601Format.format(calendar.getTime());
+            values.put(WalksContract.LogEntry.COLUMN_DATATIME, dateTime);
+
+            // location
+            values.put(WalksContract.LogEntry.COLUMN_LAT, location.latitude);
+            values.put(WalksContract.LogEntry.COLUMN_LNG, location.longitude);
+
+            // weather
+            values.put(WalksContract.LogEntry.COLUMN_WEATHER,
+                       weatherSpinner.getSelectedItem().toString());
+
+            // image TODO: The image will need to be set to whatever later.
+            String imageName = getActivity().getIntent().getStringExtra("wildlife_image_name");
+            values.put(WalksContract.LogEntry.COLUMN_IMAGE, imageName);
+
+            getActivity().getContentResolver().insert(WalksContract.LogEntry.CONTENT_URI, values);
         }
 
         // date
