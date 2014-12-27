@@ -87,13 +87,17 @@
             android:label="@string/title_activity_new_log_entry" >
         </activity>
         <activity
-            android:launchMode="singleTask"
             android:name=".ui.LocationPickerActivity"
             android:label="@string/title_activity_location_picker"
-            android:parentActivityName=".ui.NewLogEntryActivity">
+            android:launchMode="singleTask"
+            android:parentActivityName=".ui.NewLogEntryActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.gov.eastlothian.gowalk.ui.NewLogEntryActivity" />
+        </activity>
+        <activity
+            android:name=".ui.LogEntryActivity"
+            android:label="@string/title_activity_log_entry" >
         </activity>
     </application>
 

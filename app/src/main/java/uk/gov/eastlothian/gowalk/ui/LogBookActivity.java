@@ -1,12 +1,12 @@
 package uk.gov.eastlothian.gowalk.ui;
 
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -15,23 +15,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksContract;
 import uk.gov.eastlothian.gowalk.model.Wildlife;
 
-public class LogBookActivity extends Activity {
+public class LogBookActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_book);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new LogBookFragment())
                     .commit();
         }
@@ -67,7 +72,8 @@ public class LogBookActivity extends Activity {
 
         static final int WILDLIFE_LOG_ENTRIES_ID = 0;
 
-        List<Wildlife> mWildlifeList;
+        List<Wildlife> wildlife;
+        
         LogBookGridAdapter mAdapter;
 
         public LogBookFragment() {
@@ -78,6 +84,20 @@ public class LogBookActivity extends Activity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_log_book, container, false);
 
+            GridView gridView = (GridView) rootView.findViewById(R.id.log_book_gridview);
+            mAdapter = new LogBookGridAdapter(getActivity());
+            gridView.setAdapter(mAdapter);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    Wildlife w = (Wildlife) mAdapter.getItem(position);
+                    Intent intent = new Intent(getActivity(), LogEntryActivity.class);
+                    intent.putExtra("wildlife_id", w.getId());
+                    startActivity(intent);
+                }
+            });
+
+            // set up the query for the wildlife
+            getLoaderManager().initLoader(WILDLIFE_LOG_ENTRIES_ID, null, this);
 
             return rootView;
         }
@@ -91,8 +111,8 @@ public class LogBookActivity extends Activity {
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            mWildlifeList = Wildlife.fromCursor(data);
-            mAdapter.setWildlifeList(mWildlifeList);
+            wildlife = Wildlife.fromCursor(data);
+            mAdapter.setWildlifeList(wildlife);
         }
 
         @Override
@@ -103,15 +123,18 @@ public class LogBookActivity extends Activity {
 
     public static class LogBookGridAdapter extends BaseAdapter {
 
-        Context mContext;
-        LayoutInflater mInflater;
-        List<Wildlife> mWildlife;
-
-        public void setWildlifeList(List<Wildlife> wildlifeList) {
-            this.mWildlifeList = mWildlifeList;
+        static class ViewHolder {
+            TextView textView;
+            ImageView imageView;
         }
 
-        List<Wildlife> mWildlifeList;
+        Context mContext;
+        LayoutInflater mInflater;
+        List<Wildlife> mWildlife = new ArrayList<Wildlife>();
+
+        public void setWildlifeList(List<Wildlife> wildlifeList) {
+            this.mWildlife = wildlifeList;
+        }
 
         LogBookGridAdapter(Context context) {
             this.mContext = context;
@@ -120,12 +143,13 @@ public class LogBookActivity extends Activity {
 
         @Override
         public int getCount() {
-            return 0;
+            int size = mWildlife.size();
+            return size;
         }
 
         @Override
-        public Object getItem(int i) {
-            return null;
+        public Object getItem(int position) {
+            return mWildlife.get(position);
         }
 
         @Override
@@ -134,8 +158,24 @@ public class LogBookActivity extends Activity {
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            return null;
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = mInflater.inflate(R.layout.log_book_grid_cell, parent, false);
+                holder.textView = (TextView) convertView.findViewById(R.id.log_book_gird_text);
+                holder.imageView = (ImageView) convertView.findViewById(R.id.log_book_gird_image);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            Wildlife wl = mWildlife.get(position);
+            holder.textView.setText(wl.getCapitalisedName());
+            int imageId = wl.getImageResourceId(mContext);
+            holder.imageView.setImageResource(imageId);
+            holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(538, 400));
+            return convertView;
         }
     }
 }
