@@ -16,11 +16,11 @@
     <string name="route_detail_surface_label">Surface</string>
     <string name="title_activity_wildlife_guide">Wildlife in East Lothian</string>
     <string name="title_activity_wildlife_detail">WildlifeDetail</string>
-    <string name="title_activity_log_book">LogBookActivity</string>
-    <string name="title_activity_new_log_entry">NewLogEntryActivity</string>
-    <string name="title_activity_location_picker">LocationPickerActivity</string>
+    <string name="title_activity_log_book">Your Logbook</string>
+    <string name="title_activity_new_log_entry">Log a new sighting</string>
+    <string name="title_activity_location_picker">Pick a location</string>
     <string name="title_activity_log_entry">LogEntryActivity</string>
-    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_about">About the app</string>
     <string name="about_text">This app was developed as part of Nesta Scotland\'s Code for Europe programme for East Lothian Council.</string>
     <string name="about_licence">All code is Open Source and available on the Civic Exchange.</string>
     <string name="about_credits">Built by David Morrison\nDesigned by Jen Thomson</string>

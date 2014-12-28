@@ -38,7 +38,6 @@
             android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -79,12 +78,20 @@
                 android:value="uk.gov.eastlothian.gowalk.ui.WildlifeGuideActivity" />
         </activity>
         <activity
-            android:name=".ui.LogBookActivity"
-            android:label="@string/title_activity_log_book" >
+            android:name=".ui.NewLogEntryActivity"
+            android:label="@string/title_activity_new_log_entry"
+            android:parentActivityName=".ui.WildlifeDetail">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.gov.eastlothian.gowalk.ui.WildlifeDetail" />
         </activity>
         <activity
-            android:name=".ui.NewLogEntryActivity"
-            android:label="@string/title_activity_new_log_entry" >
+            android:name=".ui.LogBookActivity"
+            android:label="@string/title_activity_log_book"
+            android:parentActivityName=".ui.StartActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.gov.eastlothian.gowalk.ui.StartActivity" />
         </activity>
         <activity
             android:name=".ui.LocationPickerActivity"
@@ -97,11 +104,19 @@
         </activity>
         <activity
             android:name=".ui.LogEntryActivity"
-            android:label="@string/title_activity_log_entry" >
+            android:label="@string/title_activity_log_entry"
+            android:parentActivityName=".ui.LogBookActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.gov.eastlothian.gowalk.ui.LogBookActivity" />>
         </activity>
         <activity
             android:name=".ui.AboutActivity"
-            android:label="@string/title_activity_about" >
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".ui.StartActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uk.gov.eastlothian.gowalk.ui.StartActivity" />
         </activity>
     </application>
 

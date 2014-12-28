@@ -198,6 +198,7 @@ public class NewLogEntryActivity extends FragmentActivity {
 
             // image TODO: The image will need to be set to whatever later.
             String imageName = getActivity().getIntent().getStringExtra("wildlife_image_name");
+            if (imageName.isEmpty()) imageName = "adder";
             values.put(WalksContract.LogEntry.COLUMN_IMAGE, imageName);
 
             getActivity().getContentResolver().insert(WalksContract.LogEntry.CONTENT_URI, values);
