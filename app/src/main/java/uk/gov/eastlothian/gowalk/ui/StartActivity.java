@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksDataLoader;
 
-public class StartActivity extends Activity {
+public class StartActivity extends MainMenuActivity {
 
     private static final String LOG_TAG = StartActivity.class.getSimpleName();
 
@@ -28,28 +28,6 @@ public class StartActivity extends Activity {
         }
         // set up some globals
         WalksDataLoader.initDatabase(this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_start, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void onViewRoutesClicked(View view) {

@@ -29,7 +29,7 @@ import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksContract;
 import uk.gov.eastlothian.gowalk.model.Wildlife;
 
-public class LogBookActivity extends FragmentActivity {
+public class LogBookActivity extends MainMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,29 +40,6 @@ public class LogBookActivity extends FragmentActivity {
                     .add(R.id.container, new LogBookFragment())
                     .commit();
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_log_book, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**

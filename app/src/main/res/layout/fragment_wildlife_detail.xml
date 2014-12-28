@@ -6,7 +6,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
-    tools:context="uk.gov.eastlothian.gowalk.ui.WildlifeDetail$PlaceholderFragment"
+    tools:context="uk.gov.eastlothian.gowalk.ui.WildlifeDetailActivity$PlaceholderFragment"
     android:orientation="vertical">
 
     <LinearLayout

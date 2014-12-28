@@ -3,7 +3,11 @@
 
     <string name="app_name">Go Explore!</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_home">Home</string>
+    <string name="action_paths">Core Paths</string>
+    <string name="action_wildlife">Wildlife Guide</string>
+    <string name="action_logbook">Your Log Book</string>
+    <string name="action_about">About this App</string>
     <string name="title_activity_start">Go Explore!</string>
     <string name="button_start_core_paths">Core Paths</string>
     <string name="button_start_wildlife">Wildlife Guide</string>

@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import uk.gov.eastlothian.gowalk.R;
 
-public class RoutesActivity extends FragmentActivity implements ActionBar.TabListener{
+public class RoutesActivity extends MainMenuActivity implements ActionBar.TabListener{
 
     // used by the tabs
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -40,29 +40,6 @@ public class RoutesActivity extends FragmentActivity implements ActionBar.TabLis
                 .setText(R.string.title_routes_map_tab)
                 .setTabListener(this);
         bar.addTab(mapTab);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_paths, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

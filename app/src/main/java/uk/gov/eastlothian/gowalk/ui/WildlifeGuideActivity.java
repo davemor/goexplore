@@ -1,6 +1,5 @@
 package uk.gov.eastlothian.gowalk.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,12 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +30,7 @@ import uk.gov.eastlothian.gowalk.data.WalksContract;
 import uk.gov.eastlothian.gowalk.model.Wildlife;
 
 
-public class WildlifeGuideActivity extends FragmentActivity {
+public class WildlifeGuideActivity extends MainMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,29 +41,6 @@ public class WildlifeGuideActivity extends FragmentActivity {
                     .add(R.id.container, new WildlifeGuideFragment())
                     .commit();
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wildlife_guide, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -96,7 +70,7 @@ public class WildlifeGuideActivity extends FragmentActivity {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                     // Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
                     Wildlife w = (Wildlife) mAdapter.getItem(position);
-                    Intent wildlifeDetailIntent = new Intent(getActivity(), WildlifeDetail.class);
+                    Intent wildlifeDetailIntent = new Intent(getActivity(), WildlifeDetailActivity.class);
                     wildlifeDetailIntent.putExtra("wildlife_id", w.getId());
                     startActivity(wildlifeDetailIntent);
                 }
