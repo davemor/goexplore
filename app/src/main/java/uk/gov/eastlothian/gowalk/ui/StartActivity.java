@@ -67,6 +67,11 @@ public class StartActivity extends Activity {
         startActivity(logbookIntent);
     }
 
+    public void onViewAboutClicked(View view) {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
+
     public static class StartFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater,

@@ -99,6 +99,10 @@
             android:name=".ui.LogEntryActivity"
             android:label="@string/title_activity_log_entry" >
         </activity>
+        <activity
+            android:name=".ui.AboutActivity"
+            android:label="@string/title_activity_about" >
+        </activity>
     </application>
 
 </manifest>
