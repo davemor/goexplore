@@ -21,6 +21,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksContract;
 import uk.gov.eastlothian.gowalk.model.Wildlife;
@@ -149,8 +154,20 @@ public class LogEntryActivity extends MainMenuActivity {
                 TextView datetimeText = (TextView) view.findViewById(R.id.log_entry_datetime);
 
                 // TODO: format this better
-                locationText.setText("(" + lat + ", " + lng + ")");
-                datetimeText.setText(weather  + ", " + dateTime);
+                SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    iso8601Format.parse(dateTime);
+                    final Calendar calendar = iso8601Format.getCalendar();
+
+                    SimpleDateFormat prettyFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+                    dateTime = prettyFormat.format(calendar.getTime());
+
+                    datetimeText.setText("Sighting on " + dateTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                locationText.setText("" + weather + " at " + lat + ", " + lng + "");
             }
         }
     }

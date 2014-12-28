@@ -14,14 +14,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Riverside Drive, Haddington"
-            android:id="@+id/log_entry_place" />
+            android:text="15:00 on Saturday 31st November, 2013"
+            android:id="@+id/log_entry_datetime" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="15:00 on Saturday 31st November, 2013"
-            android:id="@+id/log_entry_datetime" />
+            android:text="Riverside Drive, Haddington"
+            android:id="@+id/log_entry_place" />
+
     </LinearLayout>
+
 </LinearLayout>
