@@ -62,7 +62,7 @@ public class WalksProvider extends ContentProvider {
         matcher.addURI(authority, WalksContract.PATH_WILDLIFE, WILDLIFE);
         matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/#", WILDLIFE_ID);
         matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/#/route", ROUTES_FOR_WILDLIFE);
-        matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/#/wildlife", LOG_ENTRIES_FOR_WILDLIFE);
+        matcher.addURI(authority, WalksContract.PATH_WILDLIFE + "/#/log", LOG_ENTRIES_FOR_WILDLIFE);
 
         // wildlife_on_route junction table
         matcher.addURI(authority, WalksContract.PATH_WILDLIFE_ON_ROUTE, WILDLIFE_ON_ROUTE);
@@ -306,7 +306,7 @@ public class WalksProvider extends ContentProvider {
                 break;
 
             case LOG_ENTRIES_FOR_WILDLIFE: {
-                long wildlifeId = ContentUris.parseId(uri);
+                String wildlifeId = WalksContract.WildlifeEntry.getWildlifeFromUri(uri);
                 rtnCursor = mOpenHelper.getReadableDatabase().query(
                     WalksContract.LogEntry.TABLE_NAME,
                     projection,

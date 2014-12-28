@@ -142,6 +142,9 @@ public class WalksContract {
         public static Uri buildRoutesFromWildlifeUri(long id) {
             return buildWildLifeUri(id).buildUpon().appendPath("route").build();
         }
+        public static Uri buildLogsForWildlifeUri(long wildlifeId) {
+            return ContentUris.withAppendedId(CONTENT_URI, wildlifeId).buildUpon().appendPath("log").build();
+        }
         public static String getWildlifeFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
