@@ -35,7 +35,9 @@
         <activity
             android:name=".ui.StartActivity"
             android:label="@string/title_activity_start"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -44,7 +46,9 @@
         <activity
             android:name=".ui.RoutesActivity"
             android:label="@string/title_activity_paths_list"
-            android:parentActivityName=".ui.StartActivity" >
+            android:parentActivityName=".ui.StartActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -54,7 +58,9 @@
         <activity
             android:name=".ui.RouteDetailActivity"
             android:label="@string/title_activity_route_detail"
-            android:parentActivityName=".ui.RoutesActivity" >
+            android:parentActivityName=".ui.RoutesActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -64,7 +70,9 @@
         <activity
             android:name=".ui.WildlifeGuideActivity"
             android:label="@string/title_activity_wildlife_guide"
-            android:parentActivityName=".ui.StartActivity" >
+            android:parentActivityName=".ui.StartActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.gov.eastlothian.gowalk.ui.StartActivity" />
@@ -72,7 +80,9 @@
         <activity
             android:name=".ui.WildlifeDetail"
             android:label="@string/title_activity_wildlife_detail"
-            android:parentActivityName=".ui.WildlifeGuideActivity" >
+            android:parentActivityName=".ui.WildlifeGuideActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.gov.eastlothian.gowalk.ui.WildlifeGuideActivity" />
@@ -80,7 +90,9 @@
         <activity
             android:name=".ui.NewLogEntryActivity"
             android:label="@string/title_activity_new_log_entry"
-            android:parentActivityName=".ui.WildlifeDetail">
+            android:parentActivityName=".ui.WildlifeDetail"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.gov.eastlothian.gowalk.ui.WildlifeDetail" />
@@ -88,7 +100,9 @@
         <activity
             android:name=".ui.LogBookActivity"
             android:label="@string/title_activity_log_book"
-            android:parentActivityName=".ui.StartActivity" >
+            android:parentActivityName=".ui.StartActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.gov.eastlothian.gowalk.ui.StartActivity" />
@@ -97,7 +111,9 @@
             android:name=".ui.LocationPickerActivity"
             android:label="@string/title_activity_location_picker"
             android:launchMode="singleTask"
-            android:parentActivityName=".ui.NewLogEntryActivity" >
+            android:parentActivityName=".ui.NewLogEntryActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.gov.eastlothian.gowalk.ui.NewLogEntryActivity" />
@@ -105,15 +121,19 @@
         <activity
             android:name=".ui.LogEntryActivity"
             android:label="@string/title_activity_log_entry"
-            android:parentActivityName=".ui.LogBookActivity" >
+            android:parentActivityName=".ui.LogBookActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uk.gov.eastlothian.gowalk.ui.LogBookActivity" />>
+                android:value="uk.gov.eastlothian.gowalk.ui.LogBookActivity" />
         </activity>
         <activity
             android:name=".ui.AboutActivity"
             android:label="@string/title_activity_about"
-            android:parentActivityName=".ui.StartActivity" >
+            android:parentActivityName=".ui.StartActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uk.gov.eastlothian.gowalk.ui.StartActivity" />
