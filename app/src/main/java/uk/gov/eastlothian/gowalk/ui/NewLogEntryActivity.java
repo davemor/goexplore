@@ -6,10 +6,16 @@ import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,9 +28,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -53,11 +62,14 @@ public class NewLogEntryActivity extends MainMenuActivity {
      */
     public static class NewLogEntryFragment extends Fragment {
 
+        private static String LOG_TAG = NewLogEntryActivity.class.getSimpleName();
+
         // view
         Button locationButton;
         Button dateButton;
         Button timeButton;
         Spinner weatherSpinner;
+        ImageView imageView;
 
         // data // TODO: This might not be a good default location (current location)
         LatLng location = new LatLng(55.9561054, -2.7770153);
@@ -78,6 +90,12 @@ public class NewLogEntryActivity extends MainMenuActivity {
                     location = new LatLng(lat, lng);
                     locationButton.setText("(" + lat + ", " + lng + ")");
                 }
+            } else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+                // Bundle extras = data.getExtras();
+                // Bitmap imageBitmap = (Bitmap) extras.get("data");
+                // imageView.setImageBitmap(imageBitmap);
+                galleryAddPic(); // add the current photo to the media gallery
+                setPic(); // set the image view to show a scaled version of the image
             }
         }
 
@@ -93,7 +111,7 @@ public class NewLogEntryActivity extends MainMenuActivity {
 
             int wildlifeImageId = getActivity().getIntent().getIntExtra("wildlife_image_res_id", -1);
             if (wildlifeImageId != -1) {
-                ImageView imageView = (ImageView) rootView.findViewById(R.id.new_log_wildlife_image_view);
+                imageView = (ImageView) rootView.findViewById(R.id.new_log_wildlife_image_view);
                 imageView.setImageResource(wildlifeImageId);
             }
 
@@ -142,13 +160,96 @@ public class NewLogEntryActivity extends MainMenuActivity {
                     // add the log to the database
                     insertLogEntry();
 
+                    Toast toast = Toast.makeText(getActivity(), "Sighting logged", Toast.LENGTH_SHORT);
+                    toast.show();
+
                     // go to the log book activity
                     Intent intent = new Intent(getActivity(), LogBookActivity.class);
                     startActivity(intent);
                 }
             });
 
+            Button cameraButton = (Button) rootView.findViewById(R.id.new_log_camera_button);
+            cameraButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dispatchTakePictureIntent();
+                }
+            });
+
             return rootView;
+        }
+
+        // Camera and image saving
+        static final int REQUEST_TAKE_PHOTO = 2;
+
+        private void dispatchTakePictureIntent() {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    Log.d(LOG_TAG, "Error occurred while creating the File: " + ex);
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                }
+            }
+        }
+        String mCurrentPhotoPath;
+
+        private File createImageFile() throws IOException {
+            // Create an image file name
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+            String imageFileName = "WILDLIFE_JPEG_" + timeStamp + "_";
+            File storageDir = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES);
+            File image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".jpg",         /* suffix */
+                    storageDir      /* directory */
+            );
+
+            // Save a file: path for use with ACTION_VIEW intents
+            mCurrentPhotoPath = image.getAbsolutePath();
+            return image;
+        }
+
+        private void galleryAddPic() {
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            File f = new File(mCurrentPhotoPath);
+            Uri contentUri = Uri.fromFile(f);
+            mediaScanIntent.setData(contentUri);
+            getActivity().sendBroadcast(mediaScanIntent);
+        }
+
+        private void setPic() {
+            // Get the dimensions of the View
+            int targetW = imageView.getWidth();
+            int targetH = imageView.getHeight();
+
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            imageView.setImageBitmap(bitmap);
         }
 
         // update the database
@@ -176,8 +277,10 @@ public class NewLogEntryActivity extends MainMenuActivity {
 
             // image TODO: The image will need to be set to whatever later.
             String imageName = getActivity().getIntent().getStringExtra("wildlife_image_name");
-            if (imageName.isEmpty()) imageName = "adder";
-            values.put(WalksContract.LogEntry.COLUMN_IMAGE, imageName);
+            if (mCurrentPhotoPath.isEmpty()) {
+                mCurrentPhotoPath = imageName;
+            }
+            values.put(WalksContract.LogEntry.COLUMN_IMAGE, mCurrentPhotoPath);
 
             getActivity().getContentResolver().insert(WalksContract.LogEntry.CONTENT_URI, values);
         }

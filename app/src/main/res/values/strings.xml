@@ -28,5 +28,7 @@
     <string name="about_text">This app was developed as part of Nesta Scotland\'s Code for Europe programme for East Lothian Council.</string>
     <string name="about_licence">All code is Open Source and available on the Civic Exchange.</string>
     <string name="about_credits">Product Managed by Matt Jones\nBuilt by David Morrison\nDesigned by Jen Thomson</string>
+    <string name="title_activity_log_book_sighting_detail">Sighting</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

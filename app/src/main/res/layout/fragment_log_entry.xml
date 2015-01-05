@@ -19,7 +19,6 @@
         android:id="@+id/log_entry_listview"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:clickable="false"
         android:listSelector="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"/>
 

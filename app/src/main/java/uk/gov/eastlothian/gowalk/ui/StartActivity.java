@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uk.gov.eastlothian.gowalk.R;
+import uk.gov.eastlothian.gowalk.data.WalksContract;
 import uk.gov.eastlothian.gowalk.data.WalksDataLoader;
+import uk.gov.eastlothian.gowalk.data.WalksDbHelper;
 
 public class StartActivity extends MainMenuActivity {
 
@@ -28,6 +31,8 @@ public class StartActivity extends MainMenuActivity {
         }
         // set up some globals
         WalksDataLoader.initDatabase(this);
+
+        Log.d(LOG_TAG, getDatabasePath(WalksDbHelper.DB_NAME).getAbsolutePath());
     }
 
     public void onViewRoutesClicked(View view) {

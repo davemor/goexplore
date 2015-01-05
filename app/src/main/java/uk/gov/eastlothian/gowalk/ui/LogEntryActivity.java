@@ -1,7 +1,9 @@
 package uk.gov.eastlothian.gowalk.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -73,6 +76,15 @@ public class LogEntryActivity extends MainMenuActivity {
             listView = (ListView) rootView.findViewById(R.id.log_entry_listview);
             adapter = new LogListAdapter(getActivity(), null, false);
             listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    Long entryId = (Long) view.getTag();
+                    Intent intent = new Intent(getActivity(), LogBookSightingDetailActivity.class);
+                    intent.putExtra("log_entry_id", entryId);
+                    startActivity(intent);
+                }
+            });
 
             // start the query
             getLoaderManager().initLoader(WILDLIFE_ID, null, this);
@@ -139,12 +151,14 @@ public class LogEntryActivity extends MainMenuActivity {
 
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                // TODO: some of this stuff could be cached I belive.
+                // TODO: some of this stuff could be cached.
+                int idIdx = cursor.getColumnIndex(WalksContract.LogEntry._ID);
                 int latIdx = cursor.getColumnIndex(WalksContract.LogEntry.COLUMN_LAT);
                 int lngIdx = cursor.getColumnIndex(WalksContract.LogEntry.COLUMN_LNG);
                 int dateTimeIdx = cursor.getColumnIndex(WalksContract.LogEntry.COLUMN_DATATIME);
                 int weatherIdx = cursor.getColumnIndex(WalksContract.LogEntry.COLUMN_WEATHER);
 
+                long id = cursor.getLong(idIdx);
                 String lat = cursor.getString(latIdx);
                 String lng = cursor.getString(lngIdx);
                 String dateTime = cursor.getString(dateTimeIdx);
@@ -168,7 +182,12 @@ public class LogEntryActivity extends MainMenuActivity {
                 }
 
                 locationText.setText("" + weather + " at " + lat + ", " + lng + "");
+
+                view.setTag(id);
             }
+
+
+
         }
     }
 }
