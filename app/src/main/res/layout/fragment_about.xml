@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/about_credits"
-        android:id="@+id/textView5"
+        android:id="@+id/about_people"
         android:padding="@dimen/activity_vertical_margin" />
 
     </LinearLayout>
