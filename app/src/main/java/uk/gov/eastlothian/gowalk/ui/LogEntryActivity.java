@@ -176,7 +176,9 @@ public class LogEntryActivity extends MainMenuActivity {
                     SimpleDateFormat prettyFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
                     dateTime = prettyFormat.format(calendar.getTime());
 
-                    datetimeText.setText("Sighting on " + dateTime);
+                    datetimeText.setText("Sighting at " + dateTime.split(" ")[0]
+                                               + " on " + dateTime.split(" ")[1]);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

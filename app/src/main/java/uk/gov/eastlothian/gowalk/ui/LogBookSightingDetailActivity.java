@@ -11,13 +11,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.text.ParseException;
@@ -65,6 +69,7 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
         ImageView imageView;
         TextView dataTimeTextView;
         TextView locationTextView;
+        TextView weatherTextView;
 
         public LogBookSightingDetailFragment() {
         }
@@ -78,6 +83,7 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
             imageView = (ImageView) rootView.findViewById(R.id.log_book_sighting_image);
             dataTimeTextView = (TextView) rootView.findViewById(R.id.log_book_sighting_datetime);
             locationTextView = (TextView) rootView.findViewById(R.id.log_book_sighting_place);
+            weatherTextView = (TextView) rootView.findViewById(R.id.log_book_sighting_weather);
 
             // start loading the log entry
             getLoaderManager().initLoader(SIGHTING_ID, null, this);
@@ -123,12 +129,14 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
                     SimpleDateFormat prettyFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
                     dateTime = prettyFormat.format(calendar.getTime());
 
-                    dataTimeTextView.setText("Sighting on " + dateTime);
+                    dataTimeTextView.setText("Sighting at " + dateTime.split(" ")[0]
+                                                   + " on " + dateTime.split(" ")[1]);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
-                locationTextView.setText("" + weather + " at " + lat + ", " + lng + "");
+                weatherTextView.setText(weather);
+                locationTextView.setText(lat + ", " + lng + "");
 
                 // check if the file exists for the path
                 File file = new File(imagePath);
@@ -143,27 +151,22 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
                     */
                     //rootView.removeView(imageView);
                 }
+
+                // set up the camera button
+                Button cameraButton = (Button) rootView.findViewById(R.id.log_book_sighting_camera_button);
+                cameraButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
             }
         }
 
         private void setImageView(String path) {
-            // Get the dimensions of the View
-            int targetW = imageView.getWidth();
-            int targetH = imageView.getHeight();
-
-            // Get the dimensions of the bitmap
+            // TODO: Can this be done in asyc
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, bmOptions);
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-
-            // Determine how much to scale down the image
-            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-            // Decode the image file into a Bitmap sized to fill the View
             bmOptions.inJustDecodeBounds = false;
-            bmOptions.inSampleSize = scaleFactor;
             bmOptions.inPurgeable = true;
 
             Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);

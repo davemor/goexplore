@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ public class Route extends BaseRecord {
     private String surface;
     private String description;
     private long primaryAreaId;
+    private PolylineOptions polylineOptions;
 
     public Route(long id, int routeNumber, String coordinates,
                  int length, String surface, String description,
@@ -127,5 +129,11 @@ public class Route extends BaseRecord {
     }
 
 
+    public PolylineOptions getPolylineOptions() {
+        return polylineOptions;
+    }
 
+    public void setPolylineOptions(PolylineOptions polylineOptions) {
+        this.polylineOptions = polylineOptions;
+    }
 }

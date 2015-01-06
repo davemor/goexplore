@@ -250,6 +250,7 @@ public class NewLogEntryActivity extends MainMenuActivity {
 
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
             imageView.setImageBitmap(bitmap);
+            imageView.invalidate();
         }
 
         // update the database
@@ -277,9 +278,7 @@ public class NewLogEntryActivity extends MainMenuActivity {
 
             // image TODO: The image will need to be set to whatever later.
             String imageName = getActivity().getIntent().getStringExtra("wildlife_image_name");
-            if (mCurrentPhotoPath.isEmpty()) {
-                mCurrentPhotoPath = imageName;
-            }
+            if (mCurrentPhotoPath.isEmpty()) mCurrentPhotoPath = imageName;
             values.put(WalksContract.LogEntry.COLUMN_IMAGE, mCurrentPhotoPath);
 
             getActivity().getContentResolver().insert(WalksContract.LogEntry.CONTENT_URI, values);

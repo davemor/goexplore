@@ -2,6 +2,7 @@ package uk.gov.eastlothian.gowalk.ui;
 
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,13 +56,9 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
             WalksContract.RouteEntry.COLUMN_PRIMARY_AREA,
             WalksContract.RouteEntry.COLUMN_LENGTH
     };
-    public static final int ROUTE_ID = 0;
-    public static final int ROUTE_NUMBER = 1;
-    public static final int ROUTE_COORDINATES = 2;
-    public static final int ROUTE_DESCRIPTION = 3;
-    public static final int ROUTE_LENGTH = 4;
 
     GoogleMap mMap;
+    List<Route> routes = new ArrayList<Route>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +81,24 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
             CameraUpdate zoom = CameraUpdateFactory.zoomTo(10);
             mMap.moveCamera(center);
             mMap.animateCamera(zoom);
+
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng clickCoords) {
+                    for (Route route : routes) {
+                        if (PolyUtil.isLocationOnPath(clickCoords, route.getPolylineOptions().getPoints(), true, 100)) {
+                            long areaId = route.getPrimaryAreaId();
+                            if(areaId == -1) areaId = 0;
+
+                            Intent intent = new Intent(getActivity(), RouteDetailActivity.class);
+                            intent.putExtra("route_id", route.getId());
+                            intent.putExtra("area_id", areaId);
+                            Log.d(LOG_TAG, "route_id: " + route.getId() + ", area_id: " + areaId);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            });
         }
         return rootView;
     }
@@ -106,13 +122,14 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<Route> routes = Route.fromCursor(cursor);
+        routes = Route.fromCursor(cursor);
         for (Route route : routes) {
             PolylineOptions lineOptions = new PolylineOptions();
             long primaryAreaId = route.getPrimaryAreaId();
             int color = AreaColors.getAreaColor(getActivity(), primaryAreaId);
             lineOptions.color(color);
             lineOptions.addAll(route.getCoordinates());
+            route.setPolylineOptions(lineOptions);
             mMap.addPolyline(lineOptions);
         }
     }

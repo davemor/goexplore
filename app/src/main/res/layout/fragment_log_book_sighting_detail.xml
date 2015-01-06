@@ -21,18 +21,46 @@
                 android:layout_height="400dp"
                 android:id="@+id/log_book_sighting_image" />
 
-            <TextView
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="15:00 on Saturday 31st November, 2013"
-                android:id="@+id/log_book_sighting_datetime" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Riverside Drive, Haddington"
-                android:id="@+id/log_book_sighting_place" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15:00 on Saturday 31st November, 2013"
+                        android:id="@+id/log_book_sighting_datetime" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Weather"
+                        android:id="@+id/log_book_sighting_weather" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Riverside Drive, Haddington"
+                        android:id="@+id/log_book_sighting_place" />
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:background="@drawable/small_camera"
+                    android:id="@+id/log_book_sighting_camera_button"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
