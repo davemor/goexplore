@@ -151,7 +151,9 @@ public class LogBookActivity extends MainMenuActivity {
             int imageId = wl.getImageResourceId(mContext);
             holder.imageView.setImageResource(imageId);
             holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(538, 400));
+            int width = (int) (parent.getWidth() / 2.0);
+            int height = (int) (0.74 * width); // TODO: It's magic!
+            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
             return convertView;
         }
     }
