@@ -130,7 +130,9 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
             lineOptions.color(color);
             lineOptions.addAll(route.getCoordinates());
             route.setPolylineOptions(lineOptions);
-            mMap.addPolyline(lineOptions);
+            if(mMap != null) {
+                mMap.addPolyline(lineOptions);
+            }
         }
     }
 
