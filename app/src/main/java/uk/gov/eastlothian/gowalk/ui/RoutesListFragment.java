@@ -197,7 +197,9 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
 
             int areaIdColIndex = cursor.getColumnIndex(WalksContract.RouteInAreaEntry.COLUMN_AREA_KEY);
             long areaId = cursor.getLong(areaIdColIndex);
-            shape.setStroke(3, AreaColors.getAreaColor(mActivity, areaId));
+            int colorId = AreaColors.getAreaColor(mActivity, areaId);
+            shape.setStroke(3, colorId);
+            shape.setColor(0);
 
             // filter out the undrawable characters from the route descriptions
             TextView lengthView = (TextView) view.findViewById(R.id.routes_list_child_length);
