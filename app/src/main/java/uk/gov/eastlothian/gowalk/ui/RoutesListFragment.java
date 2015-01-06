@@ -147,7 +147,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
                     mRoutesAdapter.setChildrenCursor(areaPos, data);
                 } catch (NullPointerException e) {
                     //Log.d(LOG_TAG, "Adapter expired, try again on the next query: "
-                                    + e.getMessage());
+                     //               + e.getMessage());
                 }
             }
         } else {
