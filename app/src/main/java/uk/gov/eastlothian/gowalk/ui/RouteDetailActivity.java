@@ -4,6 +4,7 @@ package uk.gov.eastlothian.gowalk.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -92,12 +93,16 @@ public class RouteDetailActivity extends MainMenuActivity {
             areaId = getActivity().getIntent().getLongExtra("area_id", -1);
 
             // set the background color of the header to the area color
-            final ColorDrawable areaColor = new ColorDrawable(AreaColors.getAreaColor(getActivity(), areaId));
+            int areaColorVal = AreaColors.getAreaColor(getActivity(), areaId);
+            final ColorDrawable areaColor = new ColorDrawable(areaColorVal);
             //View headerBG = rootView.findViewById(R.id.route_detail_background_rect);
             //headerBG.setBackground(areaColor);
             View header = rootView.findViewById(R.id.route_detail_header);
             header.setBackground(areaColor);
             getActivity().getActionBar().setBackgroundDrawable(areaColor.getConstantState().newDrawable());
+            View circle = rootView.findViewById(R.id.route_detail_circle);
+            GradientDrawable shape = (GradientDrawable) circle.getBackground();
+            shape.setColor(areaColorVal);
 
             // bind the parts of the header we want to update
             routeDescriptionView = (TextView) rootView.findViewById(R.id.route_detail_description);
