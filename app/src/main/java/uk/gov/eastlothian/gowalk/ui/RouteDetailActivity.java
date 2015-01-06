@@ -123,10 +123,13 @@ public class RouteDetailActivity extends MainMenuActivity {
 
             // set up the badge button
             Button badgeButton = (Button) rootView.findViewById(R.id.route_detail_badge_button);
+            // TODO: remove the button if the map is null
             badgeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showStartInMapsApp();
+                    if (mMap != null) {
+                        showStartInMapsApp();
+                    }
                 }
             });
 
