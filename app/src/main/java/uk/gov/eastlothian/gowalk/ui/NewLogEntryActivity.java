@@ -1,5 +1,6 @@
 package uk.gov.eastlothian.gowalk.ui;
 
+import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -57,6 +58,20 @@ public class NewLogEntryActivity extends MainMenuActivity {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, newLogEntryFragment)
                     .commit();
+        }
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

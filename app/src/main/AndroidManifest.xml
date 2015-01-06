@@ -96,11 +96,7 @@
             android:name=".ui.NewLogEntryActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_new_log_entry"
-            android:parentActivityName=".ui.WildlifeDetailActivity"
             android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.WildlifeDetailActivity" />
         </activity>
         <activity
             android:name=".ui.LogBookActivity"

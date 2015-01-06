@@ -33,6 +33,12 @@
                 android:id="@+id/route_detail_route_num"
                 android:textColor="@android:color/white" />
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/route_detail_badge_button"
+                android:background="@null"/>
+
         </RelativeLayout>
 
         <LinearLayout

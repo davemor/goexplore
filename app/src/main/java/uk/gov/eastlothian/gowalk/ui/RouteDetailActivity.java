@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +27,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.Locale;
 
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksContract;
@@ -112,7 +116,30 @@ public class RouteDetailActivity extends MainMenuActivity {
             getLoaderManager().initLoader(ROUTE_QUERY_ID, null, this);
             getLoaderManager().initLoader(WILDLIFE_QUERY_ID, null, this);
 
+            // set up the badge button
+            Button badgeButton = (Button) rootView.findViewById(R.id.route_detail_badge_button);
+            badgeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showStartInMapsApp();
+                }
+            });
+
             return rootView;
+        }
+
+        void showStartInMapsApp() {
+            String label = "Start";
+            try {
+                label = URLEncoder.encode("Start of Route " + route.getRouteNumber(), "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                // e.printStackTrace();
+            }
+            String uri = String.format(Locale.ENGLISH, "geo:0,0?q=%f,%f(%s)",
+                    route.startPoint().latitude, route.startPoint().longitude, label);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            getActivity().startActivity(intent);
         }
 
         @Override
