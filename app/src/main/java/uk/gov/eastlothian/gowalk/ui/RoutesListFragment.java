@@ -136,7 +136,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         int count = data.getCount();
-        Log.d(LOG_TAG, "" + count);
+        //Log.d(LOG_TAG, "" + count);
 
         int id = loader.getId();
         if(id != -1) {
@@ -146,7 +146,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
                     int areaPos = areaMap.get(id);
                     mRoutesAdapter.setChildrenCursor(areaPos, data);
                 } catch (NullPointerException e) {
-                    Log.d(LOG_TAG, "Adapter expired, try again on the next query: "
+                    //Log.d(LOG_TAG, "Adapter expired, try again on the next query: "
                                     + e.getMessage());
                 }
             }
@@ -163,7 +163,7 @@ public class RoutesListFragment extends Fragment implements LoaderManager.Loader
             try {
                 mRoutesAdapter.setChildrenCursor(id, null);
             } catch (NullPointerException e) {
-                Log.w(LOG_TAG, "Adapter expired, try again on the next query: " + e.getMessage());
+                //Log.w(LOG_TAG, "Adapter expired, try again on the next query: " + e.getMessage());
             }
         } else {
             // it's a parent cursor

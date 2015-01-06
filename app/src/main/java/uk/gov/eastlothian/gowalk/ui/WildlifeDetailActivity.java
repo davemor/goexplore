@@ -135,7 +135,7 @@ public class WildlifeDetailActivity extends MainMenuActivity {
                         descriptionView.setText(Html.fromHtml(wildlife.getDescription()));
                         getActivity().getActionBar().setTitle(wildlife.getCapitalisedName());
                     } else {
-                        Log.d(LOG_TAG, "Error loading wildlife.");
+                        //Log.d(LOG_TAG, "Error loading wildlife.");
                     }
                     break;
                 }

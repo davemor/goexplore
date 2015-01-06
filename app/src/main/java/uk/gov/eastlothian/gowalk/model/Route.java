@@ -122,7 +122,7 @@ public class Route extends BaseRecord {
                     rtnList.add(new LatLng(pair.getDouble(1), pair.getDouble(0)));
                 }
             } catch (JSONException e) {
-                Log.d(LOG_TAG, "Error parsing route coordinates for route: " + e);
+                //Log.d(LOG_TAG, "Error parsing route coordinates for route: " + e);
             }
         }
         return rtnList;

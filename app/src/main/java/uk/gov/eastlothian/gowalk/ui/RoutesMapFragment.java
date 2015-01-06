@@ -93,7 +93,7 @@ public class RoutesMapFragment extends Fragment implements LoaderManager.LoaderC
                             Intent intent = new Intent(getActivity(), RouteDetailActivity.class);
                             intent.putExtra("route_id", route.getId());
                             intent.putExtra("area_id", areaId);
-                            Log.d(LOG_TAG, "route_id: " + route.getId() + ", area_id: " + areaId);
+                            //Log.d(LOG_TAG, "route_id: " + route.getId() + ", area_id: " + areaId);
                             startActivity(intent);
                         }
                     }

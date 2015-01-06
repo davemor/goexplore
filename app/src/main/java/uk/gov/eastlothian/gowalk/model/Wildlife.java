@@ -72,7 +72,7 @@ public class Wildlife extends BaseRecord {
         String packageName = context.getPackageName();
         int rtnId = context.getResources().getIdentifier(parts[0], "drawable", packageName);
         if (rtnId == 0) {
-            Log.d(LOG_TAG, "Unable to find resource " + parts[0] + ".");
+            //Log.d(LOG_TAG, "Unable to find resource " + parts[0] + ".");
         }
         return rtnId;
     }

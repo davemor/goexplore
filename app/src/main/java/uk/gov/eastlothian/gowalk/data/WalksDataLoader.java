@@ -67,7 +67,7 @@ public class WalksDataLoader {
         try {
             JSONObject routesJson = new JSONObject(routesJsonStr);
             JSONArray paths = routesJson.getJSONArray("features");
-            Log.d(LOG_TAG, "" + paths.length());
+            //Log.d(LOG_TAG, "" + paths.length());
             for (int idx=0; idx < paths.length(); ++idx) {
 
                 // get the json objects out the document tree
@@ -115,13 +115,13 @@ public class WalksDataLoader {
                 valuesList.add(values);
             }
         } catch (JSONException e) {
-            Log.d(LOG_TAG, "There was an error parsing the core path json.", e);
+            //Log.d(LOG_TAG, "There was an error parsing the core path json.", e);
         }
 
         // bulk insert the values into the content provider
         ContentValues [] contentValues = valuesList.toArray(new ContentValues[valuesList.size()]);
         for(int idx=0; idx < contentValues.length-1; ++idx) {
-            Log.d(LOG_TAG, contentValues[idx].toString());
+            //Log.d(LOG_TAG, contentValues[idx].toString());
         }
         context.getContentResolver().bulkInsert(WalksContract.RouteEntry.CONTENT_URI, contentValues);
     }
@@ -139,13 +139,13 @@ public class WalksDataLoader {
                 rtnMap.put(routeNumber, description);
             }
         } catch (IOException ex) {
-            Log.d(LOG_TAG, "Error while loading the route descriptions.", ex);
+            //Log.d(LOG_TAG, "Error while loading the route descriptions.", ex);
         } finally {
             try {
                 inStream.close();
             }
             catch (IOException e) {
-                Log.d(LOG_TAG, "Error while closing the route descriptions csv input stream.", e);
+                //Log.d(LOG_TAG, "Error while closing the route descriptions csv input stream.", e);
             }
         }
         return rtnMap;
@@ -193,7 +193,7 @@ public class WalksDataLoader {
                     if (rowData.length > 6) {
                         imageFile = rowData[6];
                     } else {
-                        Log.d(LOG_TAG, "Cannot find image name for " + name);
+                        //Log.d(LOG_TAG, "Cannot find image name for " + name);
                     }
 
                     // assign them to database table names
@@ -236,29 +236,29 @@ public class WalksDataLoader {
                                 wildlifeOnRouteValues.add(rowValues);
 
                             } else {
-                                Log.d(LOG_TAG, "Error while loading wildlife.  Cannot find route number " + routeNumStr + ".");
+                                //Log.d(LOG_TAG, "Error while loading wildlife.  Cannot find route number " + routeNumStr + ".");
                             }
                             cursor.close();
                         } catch (NumberFormatException e) {
-                            Log.d(LOG_TAG, "Invalid route number for wildlife " + routeNumStr + ".");
+                            //Log.d(LOG_TAG, "Invalid route number for wildlife " + routeNumStr + ".");
                         }
                     }
                     // insert the values into the database
                     context.getContentResolver().bulkInsert(WalksContract.WildlifeOnRouteEntry.CONTENT_URI,
                             wildlifeOnRouteValues.toArray(new ContentValues[wildlifeOnRouteValues.size()]));
                 } else {
-                    Log.d(LOG_TAG, "Skipping line that does not have enough data.");
+                    //Log.d(LOG_TAG, "Skipping line that does not have enough data.");
                 }
                 ++idx;
             }
         } catch (IOException ex) {
-            Log.d(LOG_TAG, "Error while loading the wildlife.", ex);
+            //Log.d(LOG_TAG, "Error while loading the wildlife.", ex);
         } finally {
             try {
                 inStream.close();
             }
             catch (IOException e) {
-                Log.d(LOG_TAG, "Error while closing the wildlife csv input stream.", e);
+                //Log.d(LOG_TAG, "Error while closing the wildlife csv input stream.", e);
             }
         }
     }
@@ -319,13 +319,13 @@ public class WalksDataLoader {
                 context.getContentResolver().bulkInsert(WalksContract.RouteInAreaEntry.CONTENT_URI, areaInRouteValues);
             }
         } catch (IOException e) {
-            Log.d(LOG_TAG, "Error while reading routes in areas table." + e.toString());
+            //Log.d(LOG_TAG, "Error while reading routes in areas table." + e.toString());
         } finally {
             try {
                 reader.close();
             }
             catch (IOException ex) {
-                Log.d(LOG_TAG, "Error while closing routes in area reader.");
+                //Log.d(LOG_TAG, "Error while closing routes in area reader.");
             }
         }
     }
@@ -348,7 +348,7 @@ public class WalksDataLoader {
     // debug
     private static void printContentValues(ContentValues values) {
         for(Map.Entry<String, Object> pair : values.valueSet()) {
-            Log.d(LOG_TAG, pair.getKey() + " : " + pair.getValue());
+            //Log.d(LOG_TAG, pair.getKey() + " : " + pair.getValue());
         }
     }
 

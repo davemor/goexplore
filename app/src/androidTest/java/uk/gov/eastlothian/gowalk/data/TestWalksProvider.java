@@ -56,12 +56,10 @@ public class TestWalksProvider extends AndroidTestCase {
             Cursor routesInArea = mContext.getContentResolver().query(
                     AreaEntry.buildRoutesInAreaUri(id),
                     null, null, null, null);
-            Log.d(LOG_TAG, "Routes in area id: " + id + ", name: " + areaName);
+            // Log.d(LOG_TAG, "Routes in area id: " + id + ", name: " + areaName);
             printCursor(routesInArea);
             routesInArea.close();
         } while (areasCursor.moveToNext());
-
-        Log.d("da","da");
     }
 
     /*
@@ -193,7 +191,7 @@ public class TestWalksProvider extends AndroidTestCase {
                     if (idx < columnsQty - 1)
                         sb.append("; ");
                 }
-                Log.d(LOG_TAG, String.format("Row: %d, Values: %s", cursor.getPosition(), sb.toString()));
+                // Log.d(LOG_TAG, String.format("Row: %d, Values: %s", cursor.getPosition(), sb.toString()));
             } while (cursor.moveToNext()) ;
         }
     }

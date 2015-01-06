@@ -32,7 +32,7 @@ public class StartActivity extends MainMenuActivity {
         // set up some globals
         WalksDataLoader.initDatabase(this);
 
-        Log.d(LOG_TAG, getDatabasePath(WalksDbHelper.DB_NAME).getAbsolutePath());
+        //Log.d(LOG_TAG, getDatabasePath(WalksDbHelper.DB_NAME).getAbsolutePath());
     }
 
     public void onViewRoutesClicked(View view) {
