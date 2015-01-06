@@ -41,6 +41,9 @@ import java.util.Calendar;
 import uk.gov.eastlothian.gowalk.R;
 import uk.gov.eastlothian.gowalk.data.WalksContract;
 
+// TODO: This class needs refactored
+// - There are to many places where the time gets set etc.
+// - The image saving could be moved out to it's own class.
 public class NewLogEntryActivity extends MainMenuActivity {
 
     NewLogEntryFragment newLogEntryFragment;
@@ -201,7 +204,7 @@ public class NewLogEntryActivity extends MainMenuActivity {
                 }
             }
         }
-        String mCurrentPhotoPath;
+        String mCurrentPhotoPath = "";
 
         private File createImageFile() throws IOException {
             // Create an image file name
@@ -296,8 +299,13 @@ public class NewLogEntryActivity extends MainMenuActivity {
             this.month = month;
             this.day = day;
 
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day, hour, minute); // dd/MM/yyyy
+            SimpleDateFormat iso8601Format = new SimpleDateFormat("dd/MM/yyyy");
+            String dateTime = iso8601Format.format(calendar.getTime());
+
             // update the view - note: month is zero indexed
-            String label = "" + day + " / " + (month + 1) + " / " + year;
+            String label = dateTime;
             dateButton.setText(label);
         }
         void setDateToToday() {
@@ -325,8 +333,13 @@ public class NewLogEntryActivity extends MainMenuActivity {
         public void setTime(int hour, int minute) {
             this.hour = hour;
             this.minute = minute;
-            String label = "" + hour + ":" + minute;
-            timeButton.setText(label);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day, hour, minute); // dd/MM/yyyy
+            SimpleDateFormat iso8601Format = new SimpleDateFormat("HH:mm");
+            String dateTime = iso8601Format.format(calendar.getTime());
+
+            timeButton.setText(dateTime);
         }
         void setTimeToToday() {
             final Calendar c = Calendar.getInstance();

@@ -142,17 +142,9 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
                 File file = new File(imagePath);
                 if(file.exists()) {
                     setImageView(imagePath);
-                } else {
-                    /*
-                    int resId = getActivity().getResources().getIdentifier(imagePath.split("\\.")[0], "drawable", getActivity().getPackageName());
-                    if (resId != 0) {
-                       imageView.setImageResource(resId);
-                    }
-                    */
-                    //rootView.removeView(imageView);
                 }
-
                 // set up the camera button
+                /*
                 Button cameraButton = (Button) rootView.findViewById(R.id.log_book_sighting_camera_button);
                 cameraButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -160,6 +152,7 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
 
                     }
                 });
+                */
             }
         }
 
