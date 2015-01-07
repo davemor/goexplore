@@ -22,6 +22,11 @@ public class Wildlife extends BaseRecord {
     private String description;
     private String imageName;
     private String whenSeen;
+
+    public int getNumLogEntries() {
+        return numLogEntries;
+    }
+
     private int numLogEntries;
 
     private Wildlife(Cursor cursor) {

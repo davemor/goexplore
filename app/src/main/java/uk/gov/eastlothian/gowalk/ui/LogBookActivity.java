@@ -3,6 +3,8 @@ package uk.gov.eastlothian.gowalk.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,11 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -103,6 +107,8 @@ public class LogBookActivity extends MainMenuActivity {
         static class ViewHolder {
             TextView textView;
             ImageView imageView;
+            View circleView;
+            TextView badgeText;
         }
 
         Context mContext;
@@ -142,6 +148,8 @@ public class LogBookActivity extends MainMenuActivity {
                 convertView = mInflater.inflate(R.layout.log_book_grid_cell, parent, false);
                 holder.textView = (TextView) convertView.findViewById(R.id.log_book_gird_text);
                 holder.imageView = (ImageView) convertView.findViewById(R.id.log_book_gird_image);
+                holder.circleView = convertView.findViewById(R.id.log_book_circle);
+                holder.badgeText = (TextView) convertView.findViewById(R.id.log_book_route_num);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -153,7 +161,12 @@ public class LogBookActivity extends MainMenuActivity {
             holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             int width = (int) (parent.getWidth() / 2.0);
             int height = (int) (0.74 * width); // TODO: It's magic!
-            holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+            holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+            GradientDrawable shape = (GradientDrawable) holder.circleView.getBackground();
+            int color = Color.parseColor("#FF4400");
+            shape.setColor(color);
+            shape.setStroke(0, color);
+            holder.badgeText.setText("" + wl.getNumLogEntries());
             return convertView;
         }
     }

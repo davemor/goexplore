@@ -5,11 +5,41 @@
     android:layout_height="match_parent"
     android:background="@color/grey_background">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/log_book_gird_image"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/log_book_gird_image"/>
+
+        <RelativeLayout
+            android:layout_width="32dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="@dimen/activity_vertical_margin_small"
+            android:layout_margin="@dimen/activity_vertical_margin_small">
+
+            <View
+                android:id="@+id/log_book_circle"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/big_circle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="123"
+                android:id="@+id/log_book_route_num"
+                android:textColor="@android:color/white" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <TextView android:id="@+id/log_book_gird_text"
         android:paddingTop="@dimen/activity_vertical_margin_small"
