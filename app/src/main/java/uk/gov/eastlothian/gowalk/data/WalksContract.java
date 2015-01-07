@@ -142,9 +142,6 @@ public class WalksContract {
         public static Uri buildRoutesFromWildlifeUri(long id) {
             return buildWildLifeUri(id).buildUpon().appendPath("route").build();
         }
-        public static Uri buildLogsForWildlifeUri(long wildlifeId) {
-            return ContentUris.withAppendedId(CONTENT_URI, wildlifeId).buildUpon().appendPath("log").build();
-        }
         public static String getWildlifeFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
@@ -194,6 +191,14 @@ public class WalksContract {
         }
         public static Uri buildWildlifeLogsUri() {
             return CONTENT_URI.buildUpon().appendPath("wildlife").build();
+        }
+        public static Uri buildLogsForWildlifeUri(long wildlifeId) {
+            // "/wildlife/#"
+            return ContentUris.withAppendedId(CONTENT_URI.buildUpon().appendPath("wildlife").build(), wildlifeId);
+        }
+        public static String getWildifeIdFromURI(Uri uri) {
+            // "/wildlife/#"
+            return uri.getLastPathSegment();
         }
     }
 }

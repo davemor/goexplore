@@ -110,7 +110,7 @@ public class LogEntryActivity extends MainMenuActivity {
                     break;
                 }
                 case WILDLIFE_LOG_QUERY_ID: {
-                    Uri uri = WalksContract.WildlifeEntry.buildLogsForWildlifeUri(wildlifeId);
+                    Uri uri = WalksContract.LogEntry.buildLogsForWildlifeUri(wildlifeId);
                     rtnCursor = new CursorLoader(getActivity(), uri, null, null, null, null);
                     break;
                 }

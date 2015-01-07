@@ -51,15 +51,25 @@
                         android:id="@+id/log_book_sighting_place" />
 
                 </LinearLayout>
-<!--
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:id="@+id/log_book_sighting_delete_button"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:background="@drawable/small_camera"
-                    android:id="@+id/log_book_sighting_camera_button"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"/>
--->
+                    android:layout_marginLeft="@dimen/activity_vertical_margin_small"
+                    android:textColor="@android:color/white"
+                    android:background="#ffeb241d" />
+                <!--
+                                <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                                    android:background="@drawable/small_camera"
+                                    android:id="@+id/log_book_sighting_camera_button"
+                                    android:layout_marginLeft="@dimen/activity_vertical_margin"/>
+                -->
             </LinearLayout>
 
         </LinearLayout>

@@ -25,7 +25,7 @@
     <string name="title_activity_location_picker">Pick a location</string>
     <string name="title_activity_log_entry">LogEntryActivity</string>
     <string name="title_activity_about">About the app</string>
-    <string name="about_text">This app was developed as part of Nesta Scotland\'s Code for Europe programme for East Lothian Council.</string>
+    <string name="about_text">This is a Beta version of this software. It has been developed as part of Nesta Scotland\'s Code for Europe programme for East Lothian Council.</string>
     <string name="about_licence">All code is Open Source and available on the Civic Exchange.</string>
     <string name="about_credits">Product Managed by Matt Jones\nBuilt by David Morrison\nDesigned by Jen Thomson\n\nThis app makes use of Pkmmte Xeleon\'s <a href="https://github.com/Pkmmte/CircularImageView/">CircularImageView library</a> which is released under the <a href="https://github.com/Pkmmte/CircularImageView/blob/master/LICENSE">MIT licence.</a></string>
     <string name="title_activity_log_book_sighting_detail">Sighting</string>

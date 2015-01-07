@@ -1,6 +1,8 @@
 package uk.gov.eastlothian.gowalk.ui;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -70,6 +72,8 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
         TextView dataTimeTextView;
         TextView locationTextView;
         TextView weatherTextView;
+        Button deleteButton;
+        long logEntryId;
 
         public LogBookSightingDetailFragment() {
         }
@@ -84,18 +88,17 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
             dataTimeTextView = (TextView) rootView.findViewById(R.id.log_book_sighting_datetime);
             locationTextView = (TextView) rootView.findViewById(R.id.log_book_sighting_place);
             weatherTextView = (TextView) rootView.findViewById(R.id.log_book_sighting_weather);
+            deleteButton = (Button) rootView.findViewById(R.id.log_book_sighting_delete_button);
 
             // start loading the log entry
             getLoaderManager().initLoader(SIGHTING_ID, null, this);
-
-
 
             return rootView;
         }
 
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            long logEntryId = getActivity().getIntent().getLongExtra("log_entry_id", -1);
+            logEntryId = getActivity().getIntent().getLongExtra("log_entry_id", -1);
             if( logEntryId != -1) {
                 Uri uri = WalksContract.LogEntry.buildLogEntrysUri(logEntryId);
                 Loader<Cursor> rtnCursor = new CursorLoader(getActivity(), uri, null, null, null, null);
@@ -153,7 +156,39 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
                     }
                 });
                 */
+
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("Delete entry")
+                                .setMessage("Are you sure you want to delete this entry?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                        deleteLogEntry();
+                                        getActivity().finish();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .setIcon(R.drawable.ic_launcher)
+                                .show();
+                    }
+                });
             }
+        }
+
+        private void deleteLogEntry() {
+            // Log.d("BAB", "delete log entry" + logEntryId);
+            getActivity().getContentResolver().delete(
+                    WalksContract.LogEntry.CONTENT_URI,
+                    "_id = ?",
+                    new String[] {new Long(logEntryId).toString()});
+
         }
 
         private void setImageView(String path) {
