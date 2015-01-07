@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -167,6 +168,8 @@ public class LogBookSightingDetailActivity extends MainMenuActivity  {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // continue with delete
                                         deleteLogEntry();
+                                        Toast toast = Toast.makeText(getActivity(), "Sighting deleted", Toast.LENGTH_SHORT);
+                                        toast.show();
                                         getActivity().finish();
                                     }
                                 })
