@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -85,6 +86,12 @@ public class LogEntryActivity extends MainMenuActivity {
                     startActivity(intent);
                 }
             });
+
+            // get the view
+            int width = this.getResources().getDisplayMetrics().widthPixels;
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            int height = (int) (0.74 * width); // TODO: It's magic!
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
 
             // start the query
             getLoaderManager().initLoader(WILDLIFE_ID, null, this);

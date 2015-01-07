@@ -12,7 +12,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/footer_background">
 
         <ImageView
             android:layout_width="match_parent"
@@ -36,7 +37,8 @@
             android:id="@+id/wildlife_detail_description"
             android:layout_centerHorizontal="true"
             android:padding="@dimen/activity_vertical_margin_small"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:background="@color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"

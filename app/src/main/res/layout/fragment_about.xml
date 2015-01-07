@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:padding="0dp"
     tools:context="uk.gov.eastlothian.gowalk.ui.AboutActivity$PlaceholderFragment"
-    android:orientation="vertical"
-    android:gravity="center_vertical">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,10 +18,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/imageView2"
-        android:layout_gravity="center_horizontal"
+        android:id="@+id/short_eared_owl"
         android:src="@drawable/short_eared_owl"
-        android:scaleType="fitXY" />
+        />
 
     <TextView
         android:layout_width="match_parent"

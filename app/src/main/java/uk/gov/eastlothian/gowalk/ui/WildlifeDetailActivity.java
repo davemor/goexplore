@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -76,7 +77,12 @@ public class WildlifeDetailActivity extends MainMenuActivity {
             wildlifeId = getActivity().getIntent().getLongExtra("wildlife_id", -1);
 
             // get the view
+            int width = this.getResources().getDisplayMetrics().widthPixels;
             imageView = (ImageView) rootView.findViewById(R.id.wildlife_detail_image);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            int height = (int) (0.74 * width); // TODO: It's magic!
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+
             descriptionView = (TextView) rootView.findViewById(R.id.wildlife_detail_description);
             routeNumbersInsertPoint = (ViewGroup) rootView.findViewById(R.id.wildlife_detail_route_number_insert_point);
 

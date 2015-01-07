@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import uk.gov.eastlothian.gowalk.R;
@@ -43,6 +45,13 @@ public class AboutActivity extends MainMenuActivity {
 
             TextView about = (TextView) rootView.findViewById(R.id.about_people);
             about.setMovementMethod(LinkMovementMethod.getInstance());
+
+            // get the view
+            ImageView imageView = (ImageView) rootView.findViewById(R.id.short_eared_owl);
+            int width = this.getResources().getDisplayMetrics().widthPixels;
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            int height = (int) (0.74 * width); // TODO: It's magic!
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
 
             return rootView;
         }
