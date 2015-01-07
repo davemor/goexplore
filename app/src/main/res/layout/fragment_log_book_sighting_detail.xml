@@ -21,7 +21,7 @@
                 android:layout_height="400dp"
                 android:id="@+id/log_book_sighting_image" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -60,7 +60,8 @@
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginLeft="@dimen/activity_vertical_margin_small"
                     android:textColor="@android:color/white"
-                    android:background="#ffeb241d" />
+                    android:background="#ffeb241d"
+                    android:layout_alignParentRight="true"/>
                 <!--
                                 <Button
                                     android:layout_width="wrap_content"
@@ -70,7 +71,7 @@
                                     android:id="@+id/log_book_sighting_camera_button"
                                     android:layout_marginLeft="@dimen/activity_vertical_margin"/>
                 -->
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 
