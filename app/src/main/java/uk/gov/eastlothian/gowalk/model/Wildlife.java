@@ -2,6 +2,8 @@ package uk.gov.eastlothian.gowalk.model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class Wildlife extends BaseRecord {
     private String description;
     private String imageName;
     private String whenSeen;
+    private Bitmap thumbnail;
 
     public int getNumLogEntries() {
         return numLogEntries;
@@ -80,6 +83,20 @@ public class Wildlife extends BaseRecord {
             //Log.d(LOG_TAG, "Unable to find resource " + parts[0] + ".");
         }
         return rtnId;
+    }
+
+    public void makeThumbnail(Context context, int width) {
+        int height = (int) (0.74 * width);
+        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), getImageResourceId(context));
+        thumbnail = Bitmap.createScaledBitmap(bm, width, height, false);
+    }
+
+    public Bitmap getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Bitmap bm) {
+        this.thumbnail = bm;
     }
 
     public String getCapitalisedName() {

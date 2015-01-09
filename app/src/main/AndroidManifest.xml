@@ -39,7 +39,10 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCuyOI3aXqjw0mvDJOxeeJzuDjszcvO12o" />
+            android:value="AIzaSyDX7ucrtewN0hlT1N0YA48sAW0BXUW7y5E"
+            />
+        <!-- DEBUG KEY android:value="AIzaSyACcqYHvD0OZOEjh49OKkN9O6gUQeUy1OI" -->
+        <!-- RELEASE KEY android:value="AIzaSyDX7ucrtewN0hlT1N0YA48sAW0BXUW7y5E" -->
 
         <activity
             android:name=".ui.StartActivity"
