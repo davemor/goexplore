@@ -1,12 +1,253 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="uk.gov.eastlothian.gowalk.ui.StartActivity.StartFragment"
-    android:background="@color/background_color">
+    android:background="@drawable/background_image"
+    android:orientation="vertical">
 
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:id="@+id/imageButton"
+        android:background="@drawable/go_explore_logo"
+        android:layout_marginTop="53dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout1"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_small"
+        android:layout_centerInParent="true">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/linearLayout1"
+            android:layout_alignParentTop="true"
+            android:onClick="onViewRoutesClicked"
+            android:background="#00000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="#99000000"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:id="@+id/linearLayout1"
+            android:paddingTop="@dimen/activity_vertical_margin_small"
+            android:paddingBottom="@dimen/activity_vertical_margin_small">
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:src="@drawable/icon_core_paths" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:paddingRight="@dimen/activity_vertical_margin_small"
+                android:paddingLeft="@dimen/activity_vertical_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Core Paths"
+                    android:textSize="@dimen/start_button_text_size"
+                    android:textColor="#ffffffff" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Details of all Core Paths in East Lothian"
+                    android:textColor="#ffffffff"
+                    android:textSize="@dimen/Start_Description_Text_Size" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout2"
+        android:layout_below="@id/relativeLayout1">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/linearLayout2"
+            android:layout_alignParentTop="true"
+            android:onClick="onViewWildlifeGuideClicked"
+            android:background="#00000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="#99000000"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:id="@+id/linearLayout2"
+            android:paddingTop="@dimen/activity_vertical_margin_small"
+            android:paddingBottom="@dimen/activity_vertical_margin_small">
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:src="@drawable/icon_wildlife" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:paddingRight="@dimen/activity_vertical_margin_small"
+                android:paddingLeft="@dimen/activity_vertical_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wildlife Guide"
+                    android:textSize="@dimen/start_button_text_size"
+                    android:textColor="#ffffffff"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See animals, birds, sealife and plants"
+                    android:textColor="#ffffffff"
+                    android:textSize="@dimen/Start_Description_Text_Size" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout3"
+        android:layout_marginTop="@dimen/activity_vertical_margin_small"
+        android:layout_below="@id/relativeLayout2">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/linearLayout3"
+            android:layout_alignParentTop="true"
+            android:onClick="onViewLogBookClicked"
+            android:background="#00000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="#99000000"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:id="@+id/linearLayout3"
+            android:paddingTop="@dimen/activity_vertical_margin_small"
+            android:paddingBottom="@dimen/activity_vertical_margin_small">
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:src="@drawable/icon_logbook" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:paddingRight="@dimen/activity_vertical_margin_small"
+                android:paddingLeft="@dimen/activity_vertical_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Log Book"
+                    android:textSize="@dimen/start_button_text_size"
+                    android:textColor="#ffffffff"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save your sightings on your rambles!"
+                    android:textColor="#ffffffff"
+                    android:textSize="@dimen/Start_Description_Text_Size" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout4"
+        android:layout_marginTop="@dimen/activity_vertical_margin_small"
+        android:layout_below="@id/relativeLayout3">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/linearLayout4"
+            android:layout_alignParentTop="true"
+            android:onClick="onViewAboutClicked"
+            android:background="#00000000" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="#00000000"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:id="@+id/linearLayout4"
+            android:paddingTop="@dimen/activity_vertical_margin_small"
+            android:paddingBottom="@dimen/activity_vertical_margin_small">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_about" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:paddingRight="@dimen/activity_vertical_margin_small"
+                android:paddingLeft="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffffff"
+                    android:textSize="@dimen/Start_Description_Text_Size"
+                    android:text="About this App" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +257,8 @@
         android:layout_centerHorizontal="true"
         style="@style/start_activity_button"
         android:onClick="onViewRoutesClicked"
-        android:clickable="true" />
+        android:clickable="true"
+        android:background="#b0000000" />
 
     <Button
         android:layout_width="wrap_content"
@@ -56,5 +298,6 @@
         android:src="@drawable/go_explore_logo"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+    -->
 
 </RelativeLayout>

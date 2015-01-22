@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_vertical_margin_small">8dp</dimen>
     <dimen name="start_button_text_size">32sp</dimen>
+    <dimen name="start_screen_top_margin">80dp</dimen>
+    <dimen name="start_screen_bottom_margin">45dp</dimen>
+    <dimen name="Start_Description_Text_Size">12dp</dimen>
 </resources>
