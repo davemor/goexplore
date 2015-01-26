@@ -7,6 +7,14 @@
     android:paddingBottom="0dp"
     tools:context="uk.gov.eastlothian.gowalk.ui.LogBookActivity$LogBookFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Logbook is empty."
+        android:layout_centerInParent="true"
+        android:id="@+id/logbook_empty_label"
+        style="@android:style/TextAppearance.DeviceDefault.Large" />
+
     <GridView
         android:id="@+id/log_book_gridview"
         android:layout_width="match_parent"

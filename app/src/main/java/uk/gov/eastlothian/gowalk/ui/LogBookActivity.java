@@ -56,6 +56,7 @@ public class LogBookActivity extends MainMenuActivity {
         List<Wildlife> wildlife;
         
         LogBookGridAdapter mAdapter;
+        TextView emptyLabel;
 
         public LogBookFragment() {
         }
@@ -77,6 +78,8 @@ public class LogBookActivity extends MainMenuActivity {
                 }
             });
 
+            emptyLabel = (TextView) rootView.findViewById(R.id.logbook_empty_label);
+
             // set up the query for the wildlife
             getLoaderManager().initLoader(WILDLIFE_LOG_ENTRIES_ID, null, this);
 
@@ -93,6 +96,11 @@ public class LogBookActivity extends MainMenuActivity {
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
             wildlife = Wildlife.fromCursor(data);
+            if (wildlife.isEmpty()) {
+                emptyLabel.setVisibility(View.VISIBLE);
+            } else {
+                emptyLabel.setVisibility(View.INVISIBLE);
+            }
             mAdapter.setWildlifeList(wildlife);
         }
 
