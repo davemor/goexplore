@@ -209,9 +209,16 @@ public class WalksDataLoader {
                     long wildlifeId = Long.parseLong(WalksContract.WildlifeEntry.getWildlifeFromUri(wildlifeUri));
 
                     // get the route numbers of the routes the wildlife is found on
+                    // if there are quotes
                     // remove the first and last character (quotes) then split on comma
-                    String[] foundOnRoutesArr = foundOnRoutes.substring(1, foundOnRoutes.length() - 1)
-                            .split(",");
+                    // else assume it is one number
+                    String[] foundOnRoutesArr;
+                    if (foundOnRoutes.startsWith("\"")) {
+                        foundOnRoutesArr = foundOnRoutes.substring(1, foundOnRoutes.length() - 1)
+                                .split(",");
+                    } else {
+                        foundOnRoutesArr = new String[] {foundOnRoutes};
+                    }
 
                     // get the ids of those routes from the database
                     // note - we are assuming that the routes have been inserted already
