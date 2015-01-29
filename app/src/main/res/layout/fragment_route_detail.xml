@@ -31,7 +31,9 @@
                 android:layout_centerInParent="true"
                 android:text="123"
                 android:id="@+id/route_detail_route_num"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/route_number_text_size" />
 
             <Button
                 android:layout_width="match_parent"
@@ -50,7 +52,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16dip"
+                android:textSize="@dimen/route_description_text_size"
                 android:paddingBottom="5dp"
                 android:id="@+id/route_detail_description"
                 android:text="Description of the route"
@@ -62,7 +64,6 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Description of the area"
                 android:id="@+id/route_detail_area_description"
-                android:textStyle="italic"
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -100,9 +101,9 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/route_detail_surface_label"
-            android:textStyle="bold"
             android:id="@+id/route_detail_accessibility_label"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/route_detail_view_header_text_size" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -117,11 +118,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:textStyle="bold"
             android:text=""
             android:id="@+id/route_detail_wildlife_label"
             android:layout_gravity="center_horizontal"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="@dimen/route_detail_view_header_text_size" />
 
         <LinearLayout
             android:layout_width="fill_parent"
